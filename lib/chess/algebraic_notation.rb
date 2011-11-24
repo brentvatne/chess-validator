@@ -6,6 +6,9 @@ module Chess
   AlgebraicNotation = Object.new
 
   class << AlgebraicNotation
+    Colors = { :b => :black,  :w => :white }
+    Pieces = { :P => :pawn,   :N => :knight, :B => :bishop,
+               :R => :rook,   :Q => :queen,  :K => :king  }
 
     # Translates from algebreaic notation to an array
     #
@@ -46,15 +49,9 @@ module Chess
     #
     # Returns a hash containing piece information
     def translate_piece(piece)
-      colors = { :b => :black,  :w => :white }
-      pieces = { :P => :pawn,   :N => :knight,
-                 :B => :bishop, :R => :rook,
-                 :Q => :queen,  :K => :king  }
-
       color_code, piece_code = piece.split("").map(&:to_sym)
 
-      { :color => colors[color_code],
-        :type  => pieces[piece_code] }
+      { :color => Colors[color_code], :type  => Pieces[piece_code] }
     end
   end
 end
