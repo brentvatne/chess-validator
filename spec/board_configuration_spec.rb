@@ -25,5 +25,4 @@ describe Chess::BoardConfiguration do
       end
     end
   end
-
 end

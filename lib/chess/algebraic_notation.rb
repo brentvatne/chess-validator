@@ -10,7 +10,7 @@ module Chess
     # Example
     #
     #   AlgebraicNotation.translate_position("a1")
-    #   # => { :left => 0, :down => 7 }
+    #   # => { :x => 0, :y => 7 }
     #
     # Returns an array containing the position information
     # in the form [x, y]
@@ -26,7 +26,7 @@ module Chess
     # Example
     #
     #   AlgebraicNotation.translate_piece("bR")
-    #   # => { :color => "black", :piece => "rook" }
+    #   # => { :color => "black", :type => "rook" }
     #
     # Returns a hash containing piece information
     def translate_piece(piece)
@@ -38,7 +38,7 @@ module Chess
       color_code, piece_code = piece.split("").map(&:to_sym)
 
       { :color => colors[color_code],
-        :piece => pieces[piece_code] }
+        :type  => pieces[piece_code] }
     end
 
   end

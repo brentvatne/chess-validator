@@ -17,26 +17,26 @@ describe Chess::AlgebraicNotation do
     end
 
     it "should translate pawns" do
-      subject.translate_piece("wP")[:piece].should == :pawn
+      subject.translate_piece("wP")[:type].should == :pawn
 
     end
     it "should translate knights" do
-      subject.translate_piece("wN")[:piece].should == :knight
+      subject.translate_piece("wN")[:type].should == :knight
 
     end
     it "should translate bishops" do
-      subject.translate_piece("wB")[:piece].should == :bishop
+      subject.translate_piece("wB")[:type].should == :bishop
 
     end
     it "should translate rooks" do
-      subject.translate_piece("wR")[:piece].should == :rook
+      subject.translate_piece("wR")[:type].should == :rook
 
     end
     it "should translate queens" do
-      subject.translate_piece("wQ")[:piece].should == :queen
+      subject.translate_piece("wQ")[:type].should == :queen
     end
     it "should translate kings" do
-      subject.translate_piece("wK")[:piece].should == :king
+      subject.translate_piece("wK")[:type].should == :king
     end
   end
 end

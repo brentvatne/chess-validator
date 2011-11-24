@@ -1,4 +1,7 @@
 module Chess
+  # Provides a clean way to pass board configuration details
+  # between classes, for example between the Parser and the
+  # Board in order to initialize the Board state.
   class BoardConfiguration
     include Enumerable
 
