@@ -6,6 +6,8 @@ module Chess
   AlgebraicNotation = Object.new
 
   class << AlgebraicNotation
+    # Translate back as well for printing the board
+    # Use #invert on the hash
     Colors = { :b => :black,  :w => :white }
     Pieces = { :P => :pawn,   :N => :knight, :B => :bishop,
                :R => :rook,   :Q => :queen,  :K => :king  }
@@ -31,8 +33,8 @@ module Chess
     # 0                             1
     #  0  1  2  3  4  5  6  7  8      a  b  c  d  e  f  g  h
     #
-    # Returns a Hash containing the position information in the
-    # form { :x => x, :y => y }
+    #
+    # Returns a Hash containing the internal representation
     def translate_position(position)
 
     end
