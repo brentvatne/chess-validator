@@ -31,21 +31,20 @@ module Chess
     #        7                            8
     #        6                            7
     #        5                            6
-    #    y   4  Internal Representation   5   Algebraic Notation
-    # (rows) 3                            4
+    #  rows  4  Internal Representation   5   Algebraic Notation
+    #        3                            4
     #        2                            3
     #        1                            2
     #        0                            1
     #          0  1  2  3  4  5  6  7       a  b  c  d  e  f  g  h
-    #                  x (cols)
+    #                  columns
     #
     # Returns a Hash containing the internal representation
 
     def translate_position(position)
       alg_col, alg_row = position.split("")
-      Coordinates.new(Columns[alg_col.to_sym], Rows[alg_row.to_i])
+      Coordinates.new(Rows[alg_row.to_i], Columns[alg_col.to_sym])
     end
-
 
     # Translates from algebreaic notation to a hash
     #
