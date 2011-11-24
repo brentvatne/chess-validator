@@ -1,20 +1,17 @@
 describe Chess::BoardConfiguration do
 
   subject { Chess::BoardConfiguration.new }
-  let(:sample_piece) { {:color => :white, :piece => :pawn} }
+  let(:sample_piece)  { Chess::Pieces::Pawn.new(:white) }
+  let(:sample_coords) { Chess::Coordinates.new(1, 2) }
 
   before do
-    subject.add_piece(0, 0, sample_piece)
+    subject.add_piece(sample_piece, sample_coords)
   end
 
   describe "add_piece" do
     it "should add the piece to the configuration" do
-      subject.each do |e|
-        e[:color].should == sample_piece[:color]
-        e[:piece].should == sample_piece[:piece]
-        e[:x].should == 0
-        e[:y].should == 0
-      end
+      subject.first[:piece].should == sample_piece
+      subject.first[:coordinates].should == sample_coords
     end
   end
 

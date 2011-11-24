@@ -12,14 +12,12 @@ module Chess
     # Adds a piece to the piece collection
     # Used by the object creating the configuration
     #
-    # x     - An Integer between 0-7
-    # y     - An Integer between 0-7
-    # piece - A Hash => { :color => :x, :piece => :y }
+    # piece       - A sublass of Chess::Piece
+    # coordinates - A coordinates instance
     #
     # Returns the BoardConfiguration instance
-    def add_piece(x, y, piece)
-      piece[:x] = x; piece[:y] = y
-      @pieces << piece
+    def add_piece(piece, coordinates)
+      @pieces << { :piece => piece, :coordinates => coordinates }
       self
     end
 
@@ -29,6 +27,11 @@ module Chess
       @pieces.each do |piece|
         yield(piece)
       end
+    end
+
+    # Select the first configuration piece
+    def first
+      @pieces.first
     end
   end
 end
