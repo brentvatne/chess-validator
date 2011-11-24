@@ -1,4 +1,6 @@
 module Chess
+  Coordinates = Struct.new(:column, :row)
+
   class Board
     def initialize(initial_state, notation = AlgebraicNotation)
       create_new_board
