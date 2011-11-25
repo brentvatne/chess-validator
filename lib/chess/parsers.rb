@@ -39,17 +39,3 @@ module Chess
     end
   end
 end
-
-#goal: get to point where I can start testing Validator
-#as follows:
-#
-# describe "destination_within_board_boundaries" do
-#   it "should return false if not within boundaries" do
-#     Validator.legal?(board, "a10", "a60").should_not be_true
-#
-#   end
-#
-#   it "should return true if within boundaries" do
-#
-#   end
-# end

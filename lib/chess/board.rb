@@ -1,8 +1,6 @@
 module Chess
   Coordinates = Struct.new(:row, :column)
 
-  class NotOnBoard < ArgumentError; end
-
   class Board
     def initialize(initial_state, notation = AlgebraicNotation)
       @notation = notation
