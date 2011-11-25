@@ -1,6 +1,8 @@
 module Chess
   Coordinates = Struct.new(:row, :column)
 
+  class NotOnBoard < ArgumentError; end
+
   class Board
     def initialize(initial_state, notation = AlgebraicNotation)
       @notation = notation
@@ -18,6 +20,11 @@ module Chess
 
     def translate_to_coordinates(alg_position)
       @notation.translate_position(alg_position)
+    end
+
+    def verify_validity_of!(row, column)
+      is_on_board = (0 <= row && row <= 7) && (0 <= column && column <= 7)
+      raise NotOnChessBoard "Row: #{row}, Column #{column}" unless is_on_board
     end
 
     def at(row, column=:blank)

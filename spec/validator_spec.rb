@@ -34,8 +34,8 @@ describe Chess::Validator do
       # Chess.legal_move?(board, "b8", "d7").shoud be_false
       # # white pawn 1 up legal
       # Chess.legal_move?(board, "e2", "e3").shoud be_false
-      # # no piece selected illegal
-      # Chess.legal_move?(board, "e3", "e2").shoud be_false
+      # no piece selected illegal
+      Chess.legal_move?(board, "e3", "e2").should be_false
     end
   end
 
@@ -52,6 +52,10 @@ describe Chess::Validator do
 
       it "returns false when there is not a piece at the given coordinates" do
         subject.piece_exists_at_origin(board, "a5").should be_false
+      end
+
+      it "raises an error when the coordinates are outside of the bounds" do
+        expect { subject.piece_exists_at_origin(board, "z9") }.to raise_error
       end
     end
   end
