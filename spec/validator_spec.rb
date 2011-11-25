@@ -51,8 +51,12 @@ describe Chess::Validator do
     subject { RuleClass.new }
 
     describe "cells within board boundaries" do
-      it "should return false if not within boundaries" do
-        subject.cells_within_board_boundaries("z11", "q12")
+      it "should return a falsey value if not within boundaries" do
+        subject.cells_within_board_boundaries("z11", "q12").should be_false
+      end
+
+      it "should return a truthy value if within within boundaries" do
+        subject.cells_within_board_boundaries("c1", "b8").should be_true
       end
     end
     describe "piece exists at origin" do
