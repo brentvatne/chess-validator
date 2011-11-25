@@ -10,9 +10,13 @@ module Chess
     end
 
     class Pawn < Piece
+      def valid_move?(move)
+        moves.include?(move)
+      end
+
       def moves
         if color == :black then direction = -1 else direction = 1 end
-
+        
       end
 
       def first_turn

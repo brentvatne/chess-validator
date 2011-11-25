@@ -63,7 +63,7 @@ module Chess
     # Raises an exception if the piece or color code is not recognized
     #
     # Returns an instance of the corresponding piece class
-    # Raises an ArgumentError if the piece or color are not recognized
+    # Raises an ArgumentError if either the piece or color are not recognized
     def translate_piece(piece)
       color_code, piece_code = piece.split("").map(&:to_sym)
 

@@ -10,10 +10,7 @@ module Chess
     include Rules
 
     def legal?(board, origin, destination, notation = AlgebraicNotation)
-      @board = board
-      return false unless set_positions!(origin, destination, notation)
-
-      check_legality
+      bootstrap!(board, origin, destination, notation) and check_legality
     end
 
     def check_legality
@@ -23,7 +20,8 @@ module Chess
       #no_other_piece_in_path
     end
 
-    def set_positions!(origin, destination, notation)
+    def bootstrap!(board, origin, destination, notation)
+      @board = board
       begin
         @origin      = notation.translate_position(origin)
         @destination = notation.translate_position(destination)
