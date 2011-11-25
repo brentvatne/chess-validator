@@ -44,4 +44,16 @@ describe Chess::Board do
       new_board.at("g1").should == new_piece
     end
   end
+
+  describe Chess::Move do
+    describe "diagonal?" do
+      it "should return true if it is diagonal" do
+        Chess::Move.new(1,-1).should be_diagonal
+      end
+      
+      it "should return false if it is not diagonal" do
+        Chess::Move.new(0, 1).should_not be_diagonal
+      end
+    end
+  end
 end

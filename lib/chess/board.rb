@@ -1,6 +1,11 @@
 module Chess
   Coordinates = Struct.new(:row, :column)
-  class Move < Coordinates; end
+
+  class Move < Coordinates
+    def diagonal?
+      row.abs == column.abs
+    end
+  end
 
   class Board
     def initialize(initial_state, notation = AlgebraicNotation)

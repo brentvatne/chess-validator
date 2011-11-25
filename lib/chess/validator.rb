@@ -15,8 +15,8 @@ module Chess
 
     def check_legality
       piece_exists_at_origin and
-      same_team_not_occupying_destination #and
-      #valid_move_given_piece and
+      same_team_not_occupying_destination and
+      valid_move_given_piece #and
       #no_other_piece_in_path
     end
 
@@ -28,6 +28,7 @@ module Chess
       rescue ArgumentError
         return false
       end
+      @piece = @board.at(origin)
     end
   end
 end

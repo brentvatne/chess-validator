@@ -1,6 +1,5 @@
 module Chess
   module Rules
-
     def piece_exists_at_origin(board = @board, origin = @origin)
       board.at(origin) != :empty
     end
@@ -8,6 +7,16 @@ module Chess
     def same_team_not_occupying_destination(board = @board, origin = @origin, destination = @destination)
       return true if board.at(destination) == :empty
       board.at(origin).color != board.at(destination).color
+    end
+
+    def valid_move_given_piece(board = @board, origin = @origin, destination = @destination, piece = @piece)
+      move = Move.new(destination.row - origin.row, destination.column - origin.column)
+      piece.can_make_move?(move)
+    end
+
+    def has_enemy?(board = @board, origin = @origin, destination = @destination)
+      board.at(destination) != :empty and
+      board.at(destination).color != board.at(origin).color
     end
   end
 end

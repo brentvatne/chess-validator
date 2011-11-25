@@ -10,19 +10,30 @@ module Chess
     end
 
     class Pawn < Piece
-      def valid_move?(move)
-        moves.include?(move)
+      def can_make_move?(move, position, enemy)
+        moves(position, enemy).include?(move)
       end
 
-      def moves
-        if color == :black then direction = -1 else direction = 1 end
-        
+      def moves(current_position, enemy = false)
+        available = []
+        available << Move.new(1 * direction, 0)
+        available << Move.new(2 * direction, 0) if first_move?(current_position)
+        if enemy
+          available << Move.new(1 * direction, 1)
+          available << Move.new(1 * direction, 1)
+        end
+        available
       end
 
-      def first_turn
+      def attack_moves
+        [ Move.new(1 * direction, 1), Move.new(1 * direction, 1) ]
       end
 
-      def original_position?(position)
+      def direction
+        if color == :black then -1 else 1 end
+      end
+
+      def first_move?(position)
         if color == :black
           position.row == 6
         else
@@ -30,6 +41,7 @@ module Chess
         end
       end
     end
+
     class Knight  < Piece
     end
     class Bishop  < Piece

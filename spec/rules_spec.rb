@@ -47,8 +47,4 @@ describe Chess::Rules do
       subject.same_team_not_occupying_destination(board, "a1", "a4").should be_true
     end
   end
-
-  describe "" do
-
-  end
 end
