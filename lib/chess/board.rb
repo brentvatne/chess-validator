@@ -12,14 +12,6 @@ module Chess
       board_config.each { |piece| add_piece piece[:piece], piece[:coordinates] }
     end
 
-    def rows
-      @board.transpose
-    end
-
-    def columns
-      @board
-    end
-
     def add_piece(piece, coords)
       @board[coords.row][coords.column] = piece
     end
@@ -40,6 +32,14 @@ module Chess
 
     def create_new_board
       @board = Array.new(8).map { |col| col = Array.new(8).fill(:empty) }
+    end
+
+    def rows
+      @board.transpose
+    end
+
+    def columns
+      @board
     end
   end
 end
