@@ -36,7 +36,9 @@ module Chess
     end
 
     def check_legality
-      piece_exists_at_origin
+      cells_within_board_boundaries and
+      piece_exists_at_origin and
+      same_team_not_occupying_destination
     end
   end
 end
