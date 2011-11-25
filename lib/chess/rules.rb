@@ -11,12 +11,11 @@ module Chess
 
     def valid_move_given_piece(board = @board, origin = @origin, destination = @destination, piece = @piece)
       move = Move.new(destination.row - origin.row, destination.column - origin.column)
-      piece.can_make_move?(move)
+      piece.can_make_move?(move, origin, has_enemy?)
     end
 
     def has_enemy?(board = @board, origin = @origin, destination = @destination)
-      board.at(destination) != :empty and
-      board.at(destination).color != board.at(origin).color
+      board.at(destination) != :empty and board.at(destination).color != board.at(origin).color
     end
   end
 end
