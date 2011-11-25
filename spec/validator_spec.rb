@@ -40,9 +40,19 @@ describe Chess::Validator do
   end
 
   describe "rules" do
+    class RuleClass
+      include Chess::Rules
+    end
+
+    subject { RuleClass.new }
     describe "piece exists at origin" do
-      it "returns true when there is a piece at the given coordinates"
-        
+      it "returns true when there is a piece at the given coordinates" do
+        subject.piece_exists_at_origin(board, "h1").should be_true
+      end
+
+      it "returns false when there is not a piece at the given coordinates" do
+        subject.piece_exists_at_origin(board, "a5").should be_false
+      end
     end
   end
 end

@@ -15,9 +15,25 @@ describe Chess::AlgebraicNotation do
   end
 
   describe "translate_piece" do
+
+    describe "invalid inputs" do
+      it "raises an exception if the piece code (eg K) is invalid" do
+        expect { subject.translate_piece("bZ") }.to raise_error ArgumentError
+      end
+
+      it "raises an exception if the color code (eg b) is invalid" do
+        expect { subject.translate_piece("zP") }.to raise_error ArgumentError
+      end
+
+      it "raises an error if the codes are in the wrong case" do
+        expect { subject.translate_piece("Bp") }.to raise_error ArgumentError
+      end
+    end
+
     it "should return a Piece" do
       subject.translate_piece("bR").should be_kind_of Chess::Pieces::Piece
     end
+
 
     it "should translate color" do
       subject.translate_piece("bR").color.should == :black

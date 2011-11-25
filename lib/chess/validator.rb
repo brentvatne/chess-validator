@@ -4,6 +4,9 @@ module Chess
   end
 
   module Rules
+    def piece_exists_at_origin(board = @board, origin = @origin)
+      board.at(origin) != :empty
+    end
 
   end
 
@@ -16,6 +19,4 @@ module Chess
       true
     end
   end
-
-
 end

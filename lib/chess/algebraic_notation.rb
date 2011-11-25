@@ -43,6 +43,10 @@ module Chess
 
     def translate_position(position)
       alg_col, alg_row = position.split("")
+
+      raise "Invalid row #{alg_row}" unless Rows.has_key?(alg_row.to_i)
+      raise "Invalid column #{alg_col}" unless Columns.has_key?(alg_col.to_sym)
+
       Coordinates.new(Rows[alg_row.to_i], Columns[alg_col.to_sym])
     end
 
@@ -55,9 +59,14 @@ module Chess
     #   AlgebraicNotation.translate_piece("bR")
     #   # => An instance of the Rook class, with color set to :black
     #
+    # Raises an exception if the piece or color code is not recognized
+    #
     # Returns an instance of the corresponding piece class
     def translate_piece(piece)
       color_code, piece_code = piece.split("").map(&:to_sym)
+
+      raise ArgumentError, "Invalid piece #{piece_code}" unless Pieces.has_key?(piece_code)
+      raise ArgumentError, "Invalid color #{color_code}" unless Colors.has_key?(color_code)
 
       Pieces[piece_code].new(Colors[color_code])
     end
