@@ -53,9 +53,9 @@ module Chess
     # Example
     #
     #   AlgebraicNotation.translate_piece("bR")
-    #   # => { :color => "black", :type => "rook" }
+    #   # => An instance of the Rook class, with color set to :black
     #
-    # Returns a hash containing piece information
+    # Returns an instance of the corresponding piece class
     def translate_piece(piece)
       color_code, piece_code = piece.split("").map(&:to_sym)
 

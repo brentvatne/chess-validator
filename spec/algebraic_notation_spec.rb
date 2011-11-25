@@ -10,7 +10,7 @@ describe Chess::AlgebraicNotation do
       subject.translate_position("b8").row.should == 7
     end
     it "should be able to translate back to algebreaic notation" do
-      pending
+      pending 'in order to print the board out again'
     end
   end
 
@@ -49,7 +49,7 @@ describe Chess::AlgebraicNotation do
     end
 
     it "should be able to translate back to algebreaic notation" do
-      pending
+      pending 'in order to print the board out again'
     end
   end
 end
