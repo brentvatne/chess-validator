@@ -27,14 +27,18 @@ module Chess
     end
 
     def at(row, column=:blank)
-      if row.kind_of? String and column == :blank
-        coords = translate_to_coordinates(row)
+      if (alg = row).kind_of? String and column == :blank
+        coords = translate_to_coordinates(alg)
+        row    = coords.row
+        column = coords.column
+      elsif (coords = row).kind_of? Coordinates
         row    = coords.row
         column = coords.column
       end
 
       @board[row][column]
     end
+
 
     def create_new_board
       @board = Array.new(8).map { |col| col = Array.new(8).fill(:empty) }

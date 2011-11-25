@@ -5,21 +5,31 @@ module Chess
 
   Validator = Object.new
 
+  # this uses instance variables, should change away from singleton
   class << Validator
     include Rules
 
     def legal?(board, origin, destination, notation = AlgebraicNotation)
-      @board       = board
-      @origin      = origin
-      @destination = destination
-      @notation    = notation
+      @board = board
+      return false unless set_positions!(origin, destination, notation)
+
       check_legality
     end
 
     def check_legality
-      cells_within_board_boundaries and
       piece_exists_at_origin and
-      same_team_not_occupying_destination
+      same_team_not_occupying_destination #and
+      #valid_move_given_piece and
+      #no_other_piece_in_path
+    end
+
+    def set_positions!(origin, destination, notation)
+      begin
+        @origin      = notation.translate_position(origin)
+        @destination = notation.translate_position(destination)
+      rescue ArgumentError
+        return false
+      end
     end
   end
 end

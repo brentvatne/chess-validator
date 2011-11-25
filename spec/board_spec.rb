@@ -29,6 +29,10 @@ describe Chess::Board do
     it "accepts coordinates" do
       board.at(0, 0).should == piece
     end
+
+    it "accepts Coordinates instances" do
+      board.at(Chess::Coordinates.new(0,0)).should == piece
+    end
   end
 
   describe "add_piece" do

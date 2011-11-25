@@ -10,6 +10,21 @@ module Chess
     end
 
     class Pawn < Piece
+      def moves
+        if color == :black then direction = -1 else direction = 1 end
+
+      end
+
+      def first_turn
+      end
+
+      def original_position?(position)
+        if color == :black
+          position.row == 6
+        else
+          position.row == 1
+        end
+      end
     end
     class Knight  < Piece
     end

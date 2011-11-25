@@ -20,16 +20,6 @@ describe Chess::Rules do
 
   subject { RuleTestClass.new }
 
-  describe "cells_within_board_boundaries" do
-    it "should return a falsey value if not within boundaries" do
-      subject.cells_within_board_boundaries("z11", "q12").should be_false
-    end
-
-    it "should return a truthy value if within within boundaries" do
-      subject.cells_within_board_boundaries("c1", "b8").should be_true
-    end
-  end
-
   describe "piece_exists_at_origin" do
     it "returns true when there is a piece at the given coordinates" do
       subject.piece_exists_at_origin(board, "h1").should be_true
@@ -51,6 +41,10 @@ describe Chess::Rules do
 
     it "returns a falsey value if destination piece is same team" do
       subject.same_team_not_occupying_destination(board, "a1", "a2").should be_false
+    end
+
+    it "returns a truthy value if the destination is empty" do
+      subject.same_team_not_occupying_destination(board, "a1", "a4").should be_true
     end
   end
 
