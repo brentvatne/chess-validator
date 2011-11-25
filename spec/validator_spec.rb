@@ -42,9 +42,19 @@ describe Chess::Validator do
   describe "rules" do
     class RuleClass
       include Chess::Rules
+
+      def initialize
+        @notation = Chess::AlgebraicNotation
+      end
     end
 
     subject { RuleClass.new }
+
+    describe "cells within board boundaries" do
+      it "should return false if not within boundaries" do
+        subject.cells_within_board_boundaries("z11", "q12")
+      end
+    end
     describe "piece exists at origin" do
       it "returns true when there is a piece at the given coordinates" do
         subject.piece_exists_at_origin(board, "h1").should be_true

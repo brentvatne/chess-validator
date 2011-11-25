@@ -44,8 +44,8 @@ module Chess
     def translate_position(position)
       alg_col, alg_row = position.split("")
 
-      raise "Invalid row #{alg_row}" unless Rows.has_key?(alg_row.to_i)
-      raise "Invalid column #{alg_col}" unless Columns.has_key?(alg_col.to_sym)
+      raise ArgumentError, "Invalid row #{alg_row}" unless Rows.has_key?(alg_row.to_i)
+      raise ArgumentError, "Invalid column #{alg_col}" unless Columns.has_key?(alg_col.to_sym)
 
       Coordinates.new(Rows[alg_row.to_i], Columns[alg_col.to_sym])
     end

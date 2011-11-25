@@ -4,6 +4,15 @@ module Chess
   end
 
   module Rules
+    def cells_within_board_boundaries(origin = @origin, destination = @destination, notation = @notation)
+      begin
+        notation.translate_position(origin)
+        notation.translate_position(destination)
+      rescue ArgumentError
+        return false
+      end
+    end
+
     def piece_exists_at_origin(board = @board, origin = @origin)
       board.at(origin) != :empty
     end
@@ -14,10 +23,11 @@ module Chess
   class << Validator
     include Rules
 
-    def legal?(board, origin, destination)
-      @board = board
-      @origin = origin
+    def legal?(board, origin, destination, notation = AlgebraicNotation)
+      @board       = board
+      @origin      = origin
       @destination = destination
+      @notation    = notation
       check_legality
     end
 
