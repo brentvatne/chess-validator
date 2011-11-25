@@ -1,8 +1,6 @@
 module Chess
   # Translates from algebraic notation to data structures that interface
   # with the Board
-  # Note: This class uses the Singleton pattern, as there is no need
-  # for instances
   AlgebraicNotation = Object.new
 
   class << AlgebraicNotation
@@ -44,8 +42,10 @@ module Chess
     def translate_position(position)
       alg_col, alg_row = position.split("")
 
-      raise ArgumentError, "Invalid row #{alg_row}" unless Rows.has_key?(alg_row.to_i)
-      raise ArgumentError, "Invalid column #{alg_col}" unless Columns.has_key?(alg_col.to_sym)
+      raise ArgumentError,
+				"Invalid row #{alg_row}" unless Rows.has_key?(alg_row.to_i)
+      raise ArgumentError,
+				"Invalid column #{alg_col}" unless Columns.has_key?(alg_col.to_sym)
 
       Coordinates.new(Rows[alg_row.to_i], Columns[alg_col.to_sym])
     end
@@ -65,8 +65,10 @@ module Chess
     def translate_piece(piece)
       color_code, piece_code = piece.split("").map(&:to_sym)
 
-      raise ArgumentError, "Invalid piece #{piece_code}" unless Pieces.has_key?(piece_code)
-      raise ArgumentError, "Invalid color #{color_code}" unless Colors.has_key?(color_code)
+      raise ArgumentError,
+				"Invalid piece #{piece_code}" unless Pieces.has_key?(piece_code)
+      raise ArgumentError,
+				"Invalid color #{color_code}" unless Colors.has_key?(color_code)
 
       Pieces[piece_code].new(Colors[color_code])
     end
