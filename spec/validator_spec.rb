@@ -59,6 +59,7 @@ describe Chess::Validator do
         subject.cells_within_board_boundaries("c1", "b8").should be_true
       end
     end
+
     describe "piece exists at origin" do
       it "returns true when there is a piece at the given coordinates" do
         subject.piece_exists_at_origin(board, "h1").should be_true
@@ -70,6 +71,16 @@ describe Chess::Validator do
 
       it "raises an error when the coordinates are outside of the bounds" do
         expect { subject.piece_exists_at_origin(board, "z9") }.to raise_error
+      end
+    end
+
+    describe "same team not occupying destination" do
+      it "returns a truthy value if the destination piece on other team" do
+        subject.same_team_not_occupying_destination(board, "a1", "b8").should be_true
+      end
+
+      it "returns a falsey value if destination piece is same team" do
+        subject.same_team_not_occupying_destination(board, "a1", "a2").should be_false
       end
     end
   end
