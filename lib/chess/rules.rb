@@ -1,5 +1,6 @@
 module Chess
   module Rules
+
     def cells_within_board_boundaries(origin = @origin, destination = @destination, notation = @notation)
       begin
         notation.translate_position(origin)
