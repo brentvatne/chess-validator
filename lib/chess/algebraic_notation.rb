@@ -38,6 +38,7 @@ module Chess
     #                  columns
     #
     # Returns a Hash containing the internal representation
+    # Raises ArgumentError if the row or column are not recognized
 
     def translate_position(position)
       alg_col, alg_row = position.split("")
@@ -62,6 +63,7 @@ module Chess
     # Raises an exception if the piece or color code is not recognized
     #
     # Returns an instance of the corresponding piece class
+    # Raises an ArgumentError if the piece or color are not recognized
     def translate_piece(piece)
       color_code, piece_code = piece.split("").map(&:to_sym)
 
