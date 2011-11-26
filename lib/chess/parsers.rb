@@ -6,10 +6,10 @@ module Chess
       def parse(board, notation = Notations::AlgebraicNotation)
         configuration = BoardConfiguration.new
 
-        each_cell(board) do |cell, row_number, col_number|
+        each_cell(board) do |cell, column, row|
           if has_piece?(cell)
             piece  = notation.translate_piece(cell)
-            coords = Coordinates.new(row_number, col_number)
+            coords = Coordinates.new(column, row)
             configuration.add_piece(piece, coords)
           end
         end
@@ -22,9 +22,9 @@ module Chess
       end
 
       def each_cell(board)
-        board.split("\n").each_with_index do |row, n_row|
-          row.split.each_with_index do |cell, n_col|
-            yield(cell, 7 - n_row, n_col)
+        board.split("\n").each_with_index do |row, row_number|
+          row.split.each_with_index do |cell, column_number|
+            yield(cell, column_number, 7 - row_number)
           end
         end
       end
