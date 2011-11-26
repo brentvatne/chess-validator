@@ -17,7 +17,8 @@ module Chess
       piece_exists_at_origin and
       same_team_not_occupying_destination and
       valid_move_given_piece #and
-      #no_other_piece_in_path
+      # no_other_piece_in_path and
+      # does_not_expose_king_to_check
     end
 
     def bootstrap!(board, origin, destination)
