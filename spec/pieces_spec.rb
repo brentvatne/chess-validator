@@ -8,7 +8,7 @@ describe Chess::Pieces do
     let(:black_start) { Chess::Coordinates.new(1, 6) }
     let(:enemy)       { Chess::Pieces::Pawn.new(:black) }
 
-    describe "moves" do
+    describe "can_make_move?" do
       it "should be able to move one row up if white" do
         white_pawn.can_make_move?(Chess::Move.new(0, 1), position).should be_true
       end
@@ -43,5 +43,37 @@ describe Chess::Pieces do
   describe Chess::Pieces::Knight do
     let(:knight) { Chess::Pieces::Knight.new(:black) }
 
+    describe "can_make_move?" do
+      it "should be able to move in an L shape in any direction" do
+        knight.can_make_move?(Chess::Move.new(-2, 1)).should be_true
+      end
+    end
+  end
+
+  describe Chess::Pieces::Rook do
+    let(:rook) { Chess::Pieces::Rook.new(:white) }
+
+    describe "can_make_move?" do
+      it "should be able to move any number of spaces up" do
+        (1..7).each do |n|
+          rook.can_make_move?(Chess::Move.new(0, n)).should be_true
+        end
+      end
+      it "should be able to move any number of spaces down" do
+        (1..7).each do |n|
+          rook.can_make_move?(Chess::Move.new(0, -1 * n)).should be_true
+        end
+      end
+      it "should be able to move any number of spaces left" do
+        (1..7).each do |n|
+          rook.can_make_move?(Chess::Move.new(-1 * n, 0)).should be_true
+        end
+      end
+      it "should be able to move any number of spaces right" do
+        (1..7).each do |n|
+          rook.can_make_move?(Chess::Move.new(n, 0)).should be_true
+        end
+      end
+    end
   end
 end

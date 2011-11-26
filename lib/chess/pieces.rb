@@ -8,6 +8,10 @@ module Chess
       def initialize(color)
         @color = color
       end
+
+      def can_make_move?(move, *args)
+        moves.include?(move)
+      end
     end
 
     # Public: Keeper of knowledge for whether a Pawn can perform a certain move
@@ -68,10 +72,6 @@ module Chess
     end
 
     class Knight  < Piece
-      def can_make_move?(move, *args)
-        moves.include?(move)
-      end
-
       def moves
         #[1,2,-1,-2].each_permutation_of(2)
         [ Move.new(-2, 1),  Move.new(-1, 2),
@@ -81,11 +81,23 @@ module Chess
       end
     end
 
-    class Bishop  < Piece
+    class Bishop < Piece
 
     end
 
-    class Rook  < Piece
+    class Rook < Piece
+      def moves
+        available = []
+
+        (1..7).each do |n|
+          available << Move.new(n, 0)
+          available << Move.new(-1 * n, 0)
+          available << Move.new(0, n)
+          available << Move.new(0, -1 * n)
+        end
+
+        available
+      end
     end
 
     class Queen  < Piece
