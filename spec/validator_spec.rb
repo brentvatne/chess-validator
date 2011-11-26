@@ -40,10 +40,13 @@ describe Chess::Validator do
       Chess.legal_move?(board, "b2", "b5").should be_false
 
       # g7 g2 - nothing on g7 illegal
+      Chess.legal_move?(board, "g7", "g2").should be_false
 
-      # f7 f8 - black pawn 1 down legal
+      # f7 f8 - black pawn 1 up illegal
+      Chess.legal_move?(board, "f7", "f8").should be_false
 
       # g7 e8 - nothing on g7
+      Chess.legal_move?(board, "g7", "e8").should be_false
     end
   end
 

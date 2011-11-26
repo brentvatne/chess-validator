@@ -11,15 +11,54 @@ module Chess
 
     def valid_move_given_piece
       move = Move.new(destination.column - origin.column, destination.row - origin.row)
-      piece.can_make_move?(move, origin, destination_has_enemy?)
+      board.at(origin).can_make_move?(move, origin, destination_has_enemy?)
     end
 
     def open_path_to_destination
       path_to_destination.each { |cell| return false if occupied?(cell) }
     end
 
-    def does_not_expose_king_to_check
+    # Internal: Moves a given piece to another place on the board, ignoring
+    # any validation of rules.
+    #
+    # params - :from - A Coordinates instance
+    #          :to   - A Coordinates instance
+    #
+    # Returns the board instance
+    # def move_piece!(params)
+    #
+    # Internal: Finds the location of a King, given its color
+    #
+    # color - A symbol, either :black or :white, representing the color of the
+    #         King to find.
+    #
+    # Returns a Coordinates instance with the location of the King.
+    #
+    # Internal: Selects every piece on the board
+    #
+    # color - Optional, filters the yielded Pieces to those of the given color.
+    #         Can be either :black or :white. Default is :all
+    def exposes_king_to_check?(color)
+      board.move_piece! :from => origin, :to => destination
+
+      destination = board.find_king(color)
+      enemy_color = if color == :black then :white else :black end
+
+      board.each_piece(enemy_color) do |coords|
+        origin = coords
+        return true if valid_move_given_piece and open_path_to_destination
+      end
+    end
+
+    # Internal: Saves the validator state and restores it once the block is
+    # executed.
+    #
+    # Returns the passed in block's return value.
+    def king_would_remain_safe
       true
+      # temporarily_change_state do
+      #   exposes_king_to_check?(piece.color)
+      # end
     end
 
     # Helper Methods
