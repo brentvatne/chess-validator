@@ -5,7 +5,7 @@ module Chess
     end
 
     def same_team_not_occupying_destination(board = @board, origin = @origin, destination = @destination)
-      return true if board.at(destination) == :empty
+      return true if not occupied?(destination, board)
       board.at(origin).color != board.at(destination).color
     end
 
@@ -14,16 +14,23 @@ module Chess
       piece.can_make_move?(move, origin, has_enemy?)
     end
 
+    def open_path_to_destination(board = @board, origin = @origin, destination = @destination)
+      path_for(board, origin, destination).each { |cell| return false if occupied?(cell, board) }
+    end
+
+    def does_not_expose_king_to_check
+      true
+    end
+
+    # Helper Methods
+    private
+
     def has_enemy?(board = @board, origin = @origin, destination = @destination)
       board.at(destination) != :empty and board.at(destination).color != board.at(origin).color
     end
 
-    def occupied?(cell, board = @board)
-      board.at(cell) != :empty
-    end
-
-    def open_path_to_destination(board = @board, origin = @origin, destination = @destination)
-      path_for(board, origin, destination).each { |cell| return false if occupied?(cell, board) }
+    def occupied?(coords, board = @board)
+      board.at(coords) != :empty
     end
 
     def path_for(board, origin, destination)
