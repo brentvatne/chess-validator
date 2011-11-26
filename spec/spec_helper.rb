@@ -13,3 +13,24 @@ def coords(alg)
   Chess::Notations::AlgebraicNotation.translate_position(alg)
 end
 
+def start_board
+  %Q[ bR bN bB bQ bK bB bN bR
+      bP bP bP bP bP bP bP bP
+      -- -- -- -- -- -- -- --
+      -- -- -- -- -- -- -- --
+      -- -- -- -- -- -- -- --
+      -- -- -- -- -- -- -- --
+      wP wP wP wP wP wP wP wP
+      wR wN wB wQ wK wB wN wR ]
+end
+
+def complex_board
+  %Q[ bK -- -- -- -- bB -- --
+      -- -- -- -- -- bP -- --
+      -- bP wR -- wB -- bN --
+      wN -- bP bR -- -- -- wP
+      -- -- -- -- wK wQ -- wP
+      wR -- bB wN wP -- -- --
+      -- wP bQ -- -- wP -- --
+      -- -- -- -- -- wB -- -- ]
+end

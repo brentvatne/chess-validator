@@ -18,7 +18,7 @@ module Chess
       path_to_destination.each { |cell| return false if occupied?(cell) }
     end
 
-    # Internal: Moves a given piece to another place on the board, ignoring
+    # Public: Moves a given piece to another place on the board, ignoring
     # any validation of rules.
     #
     # params - :from - A Coordinates instance
@@ -39,15 +39,16 @@ module Chess
     # color - Optional, filters the yielded Pieces to those of the given color.
     #         Can be either :black or :white. Default is :all
     def exposes_king_to_check?(color)
-      board.move_piece! :from => origin, :to => destination
+      true
+      # board.move_piece! :from => origin, :to => destination
 
-      destination = board.find_king(color)
-      enemy_color = if color == :black then :white else :black end
+      # destination = board.find_king(color)
+      # enemy_color = if color == :black then :white else :black end
 
-      board.each_piece(enemy_color) do |coords|
-        origin = coords
-        return true if valid_move_given_piece and open_path_to_destination
-      end
+      # board.each_piece(enemy_color) do |coords|
+      #   origin = coords
+      #   return true if valid_move_given_piece and open_path_to_destination
+      # end
     end
 
     # Internal: Saves the validator state and restores it once the block is
@@ -55,10 +56,9 @@ module Chess
     #
     # Returns the passed in block's return value.
     def king_would_remain_safe
-      true
-      # temporarily_change_state do
-      #   exposes_king_to_check?(piece.color)
-      # end
+      restore_state_after do
+        exposes_king_to_check?(piece.color)
+      end
     end
 
     # Helper Methods
@@ -90,6 +90,20 @@ module Chess
           paths << Coordinates.new(n, origin.column)
         end
       end
+    end
+
+    def restore_state_after
+      board_backup       = board.clone
+      origin_backup      = origin.clone
+      destination_backup = destination.clone
+      piece_backup       = piece.clone
+
+      return_value = yield
+
+      @board       = board_backup
+      @origin      = origin_backup
+      @destination = destination_backup
+      @piece       = piece_backup
     end
   end
 end

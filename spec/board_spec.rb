@@ -21,6 +21,12 @@ describe Chess::Board do
     end
   end
 
+  describe "move_piece!" do
+    it "moves the piece even if the destiantion is occupied" do
+
+    end
+  end
+
   describe "at" do
     it "accepts algebraic notation" do
       board.at("a1").should == piece

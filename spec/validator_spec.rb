@@ -1,16 +1,8 @@
 describe Chess::Validator do
-  let(:start_board) { %Q[ bR bN bB bQ bK bB bN bR
-                          bP bP bP bP bP bP bP bP
-                          -- -- -- -- -- -- -- --
-                          -- -- -- -- -- -- -- --
-                          -- -- -- -- -- -- -- --
-                          -- -- -- -- -- -- -- --
-                          wP wP wP wP wP wP wP wP
-                          wR wN wB wQ wK wB wN wR ] }
-  let(:config) { Chess::Parsers::BoardParser.parse(start_board) }
   let(:board)  { Chess::Board.new(config) }
 
   describe "manual testing examples from complex board" do
+		let(:config) { Chess::Parsers::BoardParser.parse(complex_board) }
     it "should pass these tests" do
       # b2 b3 - white pawn 1 up legal
       Chess.legal_move?(board, "b2", "b3").should be_true
@@ -51,6 +43,8 @@ describe Chess::Validator do
   end
 
   describe "overall acceptance test of sample data" do
+  let(:config) { Chess::Parsers::BoardParser.parse(start_board) }
+
     it "should pass the simple data tests" do
       # white pawn 1 up legal
       Chess.legal_move?(board, "a2", "a3").should be_true
