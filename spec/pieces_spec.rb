@@ -76,4 +76,13 @@ describe Chess::Pieces do
       end
     end
   end
+
+  describe Chess::Pieces::Bishop do
+    let(:bishop) { Chess::Pieces::Bishop.new(:white) }
+    describe "can_make_move?" do
+      it "should be able to move diagonally any number of cells" do
+        # rook.can_make_move(:up => 5, 
+      end
+    end
+  end
 end

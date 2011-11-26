@@ -9,8 +9,8 @@ module Chess
   class << Validator
     include Rules
 
-    def legal?(board, origin, destination, notation = Notations::AlgebraicNotation)
-      bootstrap!(board, origin, destination, notation) and check_legality
+    def legal?(board, origin, destination)
+      bootstrap!(board, origin, destination) and check_legality
     end
 
     def check_legality
@@ -20,11 +20,11 @@ module Chess
       #no_other_piece_in_path
     end
 
-    def bootstrap!(board, origin, destination, notation)
+    def bootstrap!(board, origin, destination)
       @board = board
       begin
-        @origin      = notation.translate_position(origin)
-        @destination = notation.translate_position(destination)
+        @origin      = board.notation.translate_position(origin)
+        @destination = board.notation.translate_position(destination)
       rescue ArgumentError
         return false
       end

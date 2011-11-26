@@ -52,11 +52,11 @@ describe Chess::Validator do
 
   describe "bootstrap!" do
     it "should return a falsey value if not within boundaries" do
-      Chess::Validator.bootstrap!(board, "z11", "q12", Chess::Notations::AlgebraicNotation).should be_false
+      Chess::Validator.bootstrap!(board, "z11", "q12").should be_false
     end
 
     it "should return a truthy value if within within boundaries" do
-      Chess::Validator.bootstrap!(board, "c1", "b8", Chess::Notations::AlgebraicNotation).should be_true
+      Chess::Validator.bootstrap!(board, "c1", "b8").should be_true
     end
   end
 

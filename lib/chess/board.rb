@@ -8,6 +8,9 @@ module Chess
   end
 
   class Board
+    # Gets the notation class
+    attr_reader :notation
+
     def initialize(initial_state, notation = Notations::AlgebraicNotation)
       @notation = notation
       create_new_board
