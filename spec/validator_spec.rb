@@ -33,17 +33,17 @@ describe Chess::Validator do
       # # black pawn 1 down 1 right illegal
       Chess.legal_move?(board, "a7", "b6").should be_false
       #
-      # # black knight 2 down 1 left legal
-      # Chess.legal_move?(board, "b8", "a6").should be_false
+      # black knight 2 down 1 left legal
+      Chess.legal_move?(board, "b8", "a6").should be_true
       #
-      # # black knight 2 down 1 right legal
-      # Chess.legal_move?(board, "b8", "c6").should be_false
+      # black knight 2 down 1 right legal
+      Chess.legal_move?(board, "b8", "c6").should be_true
       #
       # black knight move to spot occupied by team illegal
       Chess.legal_move?(board, "b8", "d7").should be_false
       #
-      # # white pawn 1 up legal
-      # Chess.legal_move?(board, "e2", "e3").should be_false
+      # white pawn 1 up legal
+      Chess.legal_move?(board, "e2", "e3").should be_true
       #
       # no piece selected illegal
       Chess.legal_move?(board, "e3", "e2").should be_false

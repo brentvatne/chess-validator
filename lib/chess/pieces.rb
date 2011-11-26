@@ -10,6 +10,8 @@ module Chess
       end
     end
 
+    # Public: Keeper of knowledge for whether a Pawn can perform a certain move
+    # given environmental conditions of the board
     class Pawn < Piece
       # Public: Decides whether the pawn can make the given move or not,
       # given environmental factors.
@@ -66,6 +68,17 @@ module Chess
     end
 
     class Knight  < Piece
+      def can_make_move?(move, *args)
+        p move
+        moves.include?(move)
+      end
+
+      def moves
+        [ Move.new(-2, 1),  Move.new(-1, 2),
+          Move.new(1, 2),   Move.new(2, 1),
+          Move.new(2, -1),  Move.new(1, -2),
+          Move.new(-1, -2), Move.new(-2, -1) ]
+      end
     end
     class Bishop  < Piece
     end
