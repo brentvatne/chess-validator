@@ -5,7 +5,7 @@ module Chess
       # Gets a the color symbol, :black or :white
       attr_reader :color
 
-      def initialize(color)
+      def initialize(color = :white)
         @color = color
       end
 
@@ -18,9 +18,6 @@ module Chess
     # given environmental conditions of the board
     class Pawn < Piece
       # Public: Decides whether the pawn can make the given move or not.
-      # The Pawn is the most complicated piece because it has two special cases:
-      # it can move diagonally if it is attacking, and it can move forward two 
-      # cells if it has not yet moved.
       #
       # move                  - A Move instance that is the delta of the
       #                         original position and the destination.
@@ -71,7 +68,7 @@ module Chess
       end
     end
 
-    class Knight  < Piece
+    class Knight < Piece
       def moves
         #[1,2,-1,-2].each_permutation_of(2)
         [ Move.new(-2, 1),  Move.new(-1, 2),
@@ -82,25 +79,34 @@ module Chess
     end
 
     class Bishop < Piece
-
+      def moves
+        (1..7).inject([]) do |available, n|
+          available << Move.new(n, n)
+          available << Move.new(-1 * n, n)
+          available << Move.new(n, -1 * n)
+          available << Move.new(-1 * n, -1 * n)
+        end
+      end
     end
 
     class Rook < Piece
       def moves
-        available = []
-
-        (1..7).each do |n|
+        (1..7).inject([]) do |available, n|
           available << Move.new(n, 0)
           available << Move.new(-1 * n, 0)
           available << Move.new(0, n)
           available << Move.new(0, -1 * n)
         end
-
-        available
       end
     end
 
     class Queen  < Piece
+      def moves
+        rook = Rook.new; bishop = Bishop.new
+
+        rook.moves + bishop.moves
+      end
+
     end
 
     class King  < Piece
