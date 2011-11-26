@@ -59,6 +59,4 @@ describe Chess::Validator do
       Chess::Validator.bootstrap!(board, "c1", "b8").should be_true
     end
   end
-
-
 end

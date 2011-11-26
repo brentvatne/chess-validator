@@ -4,17 +4,17 @@ module Chess
 
     class << BoardParser
       def parse(board, notation = Notations::AlgebraicNotation)
-        configuration = BoardConfiguration.new
+        pieces = []
 
         each_cell(board) do |cell, column, row|
           if has_piece?(cell)
             piece  = notation.translate_piece(cell)
             coords = Coordinates.new(column, row)
-            configuration.add_piece(piece, coords)
+            pieces << { :piece => piece, :coordinates => coords }
           end
         end
 
-        configuration
+        pieces
       end
 
       def has_piece?(cell)
