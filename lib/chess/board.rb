@@ -35,8 +35,8 @@ module Chess
     end
 
     def at(row, column=:blank)
-      if (alg = row).kind_of? String and column == :blank
-        coords = translate_to_coordinates(alg)
+      if (in_notation = row).kind_of? String
+        coords = translate_to_coordinates(in_notation)
         row    = coords.row
         column = coords.column
       elsif (coords = row).kind_of? Coordinates

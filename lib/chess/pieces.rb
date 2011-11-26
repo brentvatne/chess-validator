@@ -14,6 +14,50 @@ module Chess
       end
     end
 
+    class Knight < Piece
+      def moves
+        #[1,2,-1,-2].each_permutation_of(2)
+        [ Move.new(-2, 1),  Move.new(-1, 2),
+          Move.new(1, 2),   Move.new(2, 1),
+          Move.new(2, -1),  Move.new(1, -2),
+          Move.new(-1, -2), Move.new(-2, -1) ]
+      end
+    end
+
+    class Bishop < Piece
+      def moves
+        (1..7).inject([]) do |available, n|
+          available << Move.new(n, n)
+          available << Move.new(-1 * n, n)
+          available << Move.new(n, -1 * n)
+          available << Move.new(-1 * n, -1 * n)
+        end
+      end
+    end
+
+    class Rook < Piece
+      def moves
+        (1..7).inject([]) do |available, n|
+          available << Move.new(n, 0)
+          available << Move.new(-1 * n, 0)
+          available << Move.new(0, n)
+          available << Move.new(0, -1 * n)
+        end
+      end
+    end
+
+    class Queen  < Piece
+      def moves
+        rook = Rook.new; bishop = Bishop.new
+
+        rook.moves + bishop.moves
+      end
+
+    end
+
+    class King  < Piece
+    end
+
     # Public: Keeper of knowledge for whether a Pawn can perform a certain move
     # given environmental conditions of the board
     class Pawn < Piece
@@ -68,48 +112,5 @@ module Chess
       end
     end
 
-    class Knight < Piece
-      def moves
-        #[1,2,-1,-2].each_permutation_of(2)
-        [ Move.new(-2, 1),  Move.new(-1, 2),
-          Move.new(1, 2),   Move.new(2, 1),
-          Move.new(2, -1),  Move.new(1, -2),
-          Move.new(-1, -2), Move.new(-2, -1) ]
-      end
-    end
-
-    class Bishop < Piece
-      def moves
-        (1..7).inject([]) do |available, n|
-          available << Move.new(n, n)
-          available << Move.new(-1 * n, n)
-          available << Move.new(n, -1 * n)
-          available << Move.new(-1 * n, -1 * n)
-        end
-      end
-    end
-
-    class Rook < Piece
-      def moves
-        (1..7).inject([]) do |available, n|
-          available << Move.new(n, 0)
-          available << Move.new(-1 * n, 0)
-          available << Move.new(0, n)
-          available << Move.new(0, -1 * n)
-        end
-      end
-    end
-
-    class Queen  < Piece
-      def moves
-        rook = Rook.new; bishop = Bishop.new
-
-        rook.moves + bishop.moves
-      end
-
-    end
-
-    class King  < Piece
-    end
   end
 end
