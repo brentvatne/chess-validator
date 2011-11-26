@@ -24,34 +24,34 @@ describe Chess::Rules do
   describe "" do
     describe "covered by other logic" do
       it "does not care if a piece exists in the destination cell" do
-        subject.open_path_to_destination?(board, "a1","a2").should be_true
+        subject.open_path_to_destination(board, coords("a1"), coords("a2")).should be_true
       end
 
       it "does not care about the direction" do
-        subject.open_path_to_destination?(board, "a1","a2").should be_true
-        subject.open_path_to_destination?(board, "a2","a1").should be_true
+        subject.open_path_to_destination(board, coords("a1"), coords("a2")).should be_true
+        subject.open_path_to_destination(board, coords("a2"), coords("a1")).should be_true
       end
     end
     describe "blockable movement" do
       it "should return true when there is no piece obstructing path" do
-        subject.open_path_to_destination?(board, "a2", "a3").should be_true
+        subject.open_path_to_destination(board, coords("a2"), coords("a3")).should be_true
       end
 
       it "should return false if there is a piece in between the origin
           and the destination" do
-        subject.open_path_to_destination?(board, "a1", "a3").should be_false
+        subject.open_path_to_destination(board, coords("a1"), coords("a3")).should be_false
       end
     end
     describe "right next door" do
       it "should always return true if the cell is just one movement away,
           both straight and diagonally" do
-          subject.open_path_to_destination?(board, "a2","b3").should be_true
-          subject.open_path_to_destination?(board, "a4","a3").should be_true
+          subject.open_path_to_destination(board, coords("a2"), coords("b3")).should be_true
+          subject.open_path_to_destination(board, coords("a4"), coords("a3")).should be_true
       end
     end
     describe "unblockable movement - knights" do
       it "should always return true if the movement is like a knight's" do
-        subject.open_path_to_destination?(board, "a2","b3").should be_true
+        subject.open_path_to_destination(board, coords("a2"), coords("b3")).should be_true
       end
     end
   end
