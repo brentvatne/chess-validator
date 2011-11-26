@@ -13,10 +13,10 @@ module Chess
     # Public: Keeper of knowledge for whether a Pawn can perform a certain move
     # given environmental conditions of the board
     class Pawn < Piece
-      # Public: Decides whether the pawn can make the given move or not,
-      # given environmental factors. The Pawn is the most complicated piece
-      # because it has two special cases: it can move diagonally if it is
-      # attacking, and it can move forward two squares if it has not yet moved.
+      # Public: Decides whether the pawn can make the given move or not.
+      # The Pawn is the most complicated piece because it has two special cases:
+      # it can move diagonally if it is attacking, and it can move forward two 
+      # cells if it has not yet moved.
       #
       # move                  - A Move instance that is the delta of the
       #                         original position and the destination.
@@ -27,27 +27,25 @@ module Chess
       #                         destination cell has an enemy in it.
       #
       # Returns true if the Pawn can perform the provided move, false if not.
-      def can_make_move?(move, current_position, destination_has_enemy)
+      def can_make_move?(move, current_position, destination_has_enemy = false)
         moves(current_position, destination_has_enemy).include?(move)
       end
 
       # Internal: Determines what moves the pawn can make given its current
       # position and whether or not the destination cell is home to an enemy.
       #
-      # Arguments are the same as the equivalent arguments in can_make_move?
-      #
       # Returns an Array of Move instances
-      def moves(current_position, destination_has_enemy = false)
+      def moves(current_position, destination_has_enemy)
         available = []
-        available << Move.new(1 * direction, 0)
+        available << Move.new(0, 1 * direction)
 
         if first_move?(current_position)
-          available << Move.new(2 * direction, 0)
+          available << Move.new(0, 2 * direction)
         end
 
         if destination_has_enemy
-          available << Move.new(1 * direction, 1)
-          available << Move.new(1 * direction, -1)
+          available << Move.new(1, 1 * direction)
+          available << Move.new(-1, 1 * direction)
         end
 
         available
@@ -75,6 +73,7 @@ module Chess
       end
 
       def moves
+        #[1,2,-1,-2].each_permutation_of(2)
         [ Move.new(-2, 1),  Move.new(-1, 2),
           Move.new(1, 2),   Move.new(2, 1),
           Move.new(2, -1),  Move.new(1, -2),

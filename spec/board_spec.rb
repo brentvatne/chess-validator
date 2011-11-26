@@ -38,7 +38,7 @@ describe Chess::Board do
   describe "add_piece" do
     it "adds the piece at the given location" do
       new_piece = Chess::Pieces::King.new(:black)
-      new_coords = Chess::Coordinates.new(0, 6)
+      new_coords = Chess::Coordinates.new(6, 0)
       config.add_piece(new_piece, new_coords)
       new_board = Chess::Board.new(config)
       new_board.at("g1").should == new_piece
@@ -50,7 +50,7 @@ describe Chess::Board do
       it "should return true if it is diagonal" do
         Chess::Move.new(1,-1).should be_diagonal
       end
-      
+
       it "should return false if it is not diagonal" do
         Chess::Move.new(0, 1).should_not be_diagonal
       end

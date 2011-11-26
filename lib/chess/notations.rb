@@ -1,12 +1,10 @@
 module Chess
 	module Notations
-		# Translates from algebraic notation to data structures that interface
-		# with the Board
+		# Translates from algebraic notation to data structures that interface 
+    # nicely with the board.
 		AlgebraicNotation = Object.new
 
 		class << AlgebraicNotation
-			# Translate back as well for printing the board
-			# Use #invert on the hash
 			Colors  = { :b => :black,  :w => :white }
 			Pieces  = { :P => Pieces::Pawn,   :N => Pieces::Knight,
 									:B => Pieces::Bishop, :R => Pieces::Rook,
@@ -23,7 +21,7 @@ module Chess
 			# Example
 			#
 			#   AlgebraicNotation.translate_position("a1")
-			#   # => { :x => 0, :y => 7 }
+			#   # => { :column => 0, :row => 7 }
 			#
 			# The board is laid out as follows:
 			#
@@ -49,7 +47,7 @@ module Chess
 				raise ArgumentError,
 					"Invalid column #{alg_col}" unless Columns.has_key?(alg_col.to_sym)
 
-				Coordinates.new(Rows[alg_row.to_i], Columns[alg_col.to_sym])
+				Coordinates.new(Columns[alg_col.to_sym], Rows[alg_row.to_i])
 			end
 
 			# Translates from algebreaic notation to a hash

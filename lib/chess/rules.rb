@@ -10,7 +10,7 @@ module Chess
     end
 
     def valid_move_given_piece(board = @board, origin = @origin, destination = @destination, piece = @piece)
-      move = Move.new(destination.row - origin.row, destination.column - origin.column)
+      move = Move.new(destination.column - origin.column, destination.row - origin.row)
       piece.can_make_move?(move, origin, has_enemy?)
     end
 

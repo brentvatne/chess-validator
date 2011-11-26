@@ -1,5 +1,5 @@
 module Chess
-  Coordinates = Struct.new(:row, :column)
+  Coordinates = Struct.new(:column, :row)
 
   class Move < Coordinates
     def diagonal?
@@ -14,21 +14,24 @@ module Chess
       load_state(initial_state)
     end
 
+    def create_new_board
+      @board = Array.new(8).map { |col| col = Array.new(8).fill(:empty) }
+    end
+
     def load_state(board_config)
       board_config.each { |piece| add_piece piece[:piece], piece[:coordinates] }
     end
 
+    def rows
+      @board.transpose
+    end
+
+    def columns
+      @board
+    end
+
     def add_piece(piece, coords)
       @board[coords.row][coords.column] = piece
-    end
-
-    def translate_to_coordinates(alg_position)
-      @notation.translate_position(alg_position)
-    end
-
-    def verify_validity_of!(row, column)
-      is_on_board = (0 <= row && row <= 7) && (0 <= column && column <= 7)
-      raise NotOnChessBoard "Row: #{row}, Column #{column}" unless is_on_board
     end
 
     def at(row, column=:blank)
@@ -44,16 +47,8 @@ module Chess
       @board[row][column]
     end
 
-    def create_new_board
-      @board = Array.new(8).map { |col| col = Array.new(8).fill(:empty) }
-    end
-
-    def rows
-      @board.transpose
-    end
-
-    def columns
-      @board
+    def translate_to_coordinates(alg_position)
+      @notation.translate_position(alg_position)
     end
   end
 end
