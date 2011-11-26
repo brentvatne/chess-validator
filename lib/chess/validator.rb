@@ -3,13 +3,19 @@ module Chess
     Validator.legal?(board, origin, destination)
   end
 
-  Validator = Object.new
-
-  # this uses instance variables, should change away from singleton
-  class << Validator
+  class Validator
     include Rules
 
-    def legal?(board, origin, destination)
+    def self.legal?(board, origin, destination)
+      validator = self.new(board, origin, destination)
+    end
+
+    attr_reader :board
+    attr_reader :origin
+    attr_reader :destination
+    attr_reader :piece
+
+    def initialize(board, origin, destination)
       bootstrap!(board, origin, destination) and check_legality
     end
 

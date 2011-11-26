@@ -86,14 +86,4 @@ describe Chess::Validator do
       Chess.legal_move?(board, "e3", "e2").should be_false
     end
   end
-
-  describe "bootstrap!" do
-    it "should return a falsey value if not within boundaries" do
-      Chess::Validator.bootstrap!(board, "z11", "q12").should be_false
-    end
-
-    it "should return a truthy value if within within boundaries" do
-      Chess::Validator.bootstrap!(board, "c1", "b8").should be_true
-    end
-  end
 end

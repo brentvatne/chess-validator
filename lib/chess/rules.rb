@@ -1,21 +1,21 @@
 module Chess
   module Rules
-    def piece_exists_at_origin(board = @board, origin = @origin)
+    def piece_exists_at_origin
       board.at(origin) != :empty
     end
 
-    def same_team_not_occupying_destination(board = @board, origin = @origin, destination = @destination)
-      return true if not occupied?(destination, board)
+    def same_team_not_occupying_destination
+      return true if not occupied?(destination)
       board.at(origin).color != board.at(destination).color
     end
 
-    def valid_move_given_piece(board = @board, origin = @origin, destination = @destination, piece = @piece)
+    def valid_move_given_piece
       move = Move.new(destination.column - origin.column, destination.row - origin.row)
-      piece.can_make_move?(move, origin, has_enemy?)
+      piece.can_make_move?(move, origin, destination_has_enemy?)
     end
 
-    def open_path_to_destination(board = @board, origin = @origin, destination = @destination)
-      path_for(board, origin, destination).each { |cell| return false if occupied?(cell, board) }
+    def open_path_to_destination
+      path_to_destination.each { |cell| return false if occupied?(cell) }
     end
 
     def does_not_expose_king_to_check
@@ -25,15 +25,15 @@ module Chess
     # Helper Methods
     private
 
-    def has_enemy?(board = @board, origin = @origin, destination = @destination)
+    def destination_has_enemy?
       board.at(destination) != :empty and board.at(destination).color != board.at(origin).color
     end
 
-    def occupied?(coords, board = @board)
+    def occupied?(coords)
       board.at(coords) != :empty
     end
 
-    def path_for(board, origin, destination)
+    def path_to_destination
       delta_row = destination.row - origin.row
       delta_col = destination.column - origin.column
       return [] if (delta_row <= 1 and delta_col <= 1)
