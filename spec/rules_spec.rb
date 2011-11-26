@@ -29,11 +29,54 @@ describe Chess::Rules do
 
   subject { RuleTestClass.new(board) }
 
+  %Q[ bK -- -- -- -- bB -- --
+      -- -- -- -- -- bP -- --
+      -- bP wR -- wB -- bN --
+      wN -- bP bR -- -- -- wP
+      -- -- -- -- wK wQ -- wP
+      wR -- bB wN wP -- -- --
+      -- wP bQ -- -- wP -- --
+      -- -- -- -- -- wB -- -- ]
+
+  describe "king_would_remain_safe" do
+    it "should be false if the king is exposed to danger" do
+    end
+
+    it "should be true if the king would remain safe" do
+    end
+  end
+
   describe "open_path_to_destination" do
     describe "covered by other logic" do
       it "does not care if a piece exists in the destination cell" do
         subject.using("a1", "a2")
         subject.open_path_to_destination.should be_true
+      end
+
+      it "should not fail on this example (rook 2 left over top of its own)" do
+        subject.using("d5", "b5")
+        subject.open_path_to_destination.should be_false
+      end
+
+      it "should not fail on this example (queen all the way across the board)" do
+        subject.using("c2", "e7")
+        subject.open_path_to_destination.should be_false
+        # problem is it is not fitting in the categories?
+      end
+
+      it "should not fail on this example (queen moving up over two if its own pieces)" do
+        subject.using("c2", "c6")
+        subject.open_path_to_destination.should be_false
+      end
+
+      it "should not fail on this example (queen moving up over one of its team maters)" do
+        subject.using("c2", "c4")
+        subject.open_path_to_destination.should be_false
+      end
+
+      it "should not fail on this example (king to vulnerable position)" do
+        subject.using("e4", "e5")
+        subject.open_path_to_destination.should be_false
       end
 
       it "does not care about the direction" do

@@ -34,7 +34,15 @@ module Chess
 
     class << MoveParser
       def parse(moves, notation = Notations::AlgebraicNotation)
+        reduce_moves(moves) do |parsed, origin, destination|
+          parsed << { :origin => origin, :destination => destination }
+        end
+      end
 
+      def reduce_moves(moves)
+        moves.split("\n").inject([]) do |total, pair|
+          yield(total, *pair.split)
+        end
       end
     end
   end
