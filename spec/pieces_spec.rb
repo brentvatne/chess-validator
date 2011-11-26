@@ -8,10 +8,6 @@ describe Chess::Pieces do
     let(:black_start) { Chess::Coordinates.new(1, 6) }
     let(:enemy)       { Chess::Pieces::Pawn.new(:black) }
 
-    # Moves.new(1, 0) is not very clear! it looks like 1 over 0 up, when you're
-    # not trying hard to reverse your typical way of thinking.
-    # This isn't acceptable. Need to change the interface so the Move initializer
-    # is column row, so it's x (col, over) and then y (row, up)
     describe "moves" do
       it "should be able to move one row up if white" do
         white_pawn.can_make_move?(Chess::Move.new(0, 1), position).should be_true
@@ -33,8 +29,12 @@ describe Chess::Pieces do
 
       describe "enemy in diagonal" do
         it "should be able to move one row up and one row left or right, if white" do
-          # white_pawn.can_make_move?(Chess::Move.new(1, 1), position, enemy).should be_true
-          # white_pawn.can_make_move?(Chess::Move.new(-1, 1), position, enemy).should be_true
+          white_pawn.can_make_move?(Chess::Move.new(1, 1), position, enemy).should be_true
+          white_pawn.can_make_move?(Chess::Move.new(-1, 1), position, enemy).should be_true
+        end
+        it "should be able to move one row up and one row left or right, if white" do
+          black_pawn.can_make_move?(Chess::Move.new(1, -1), position, enemy).should be_true
+          black_pawn.can_make_move?(Chess::Move.new(-1, -1), position, enemy).should be_true
         end
       end
     end
