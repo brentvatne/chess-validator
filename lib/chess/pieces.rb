@@ -2,6 +2,40 @@ module Chess
   module Pieces
     # Internal: Base class for all chess board pieces.
     class Piece
+      class << self
+        # Internal: Gets moves for the class. This is not always the source of
+        # truth for moves for a piece - refer to the moves instance method
+        # instead for a definitive list.
+        attr_reader :moves
+
+        # Internal: Populates the moves class variable
+        def define_moves(&block)
+          @moves = []
+          class_eval(&block)
+        end
+
+        def straight_in_any_direction(how_many)
+          Array(how_many[:cells]).each do |n|
+           @moves.push Move.new( n,  0), Move.new(-n,  0),
+                       Move.new( 0,  n), Move.new( 0, -n)
+          end
+        end
+
+        def diagonally_in_any_direction(how_many)
+          Array(how_many[:cells]).each do |n|
+           @moves.push Move.new( n,  n), Move.new(-n, -n),
+                       Move.new(-n,  n), Move.new( n, -n)
+          end
+        end
+
+        def l_shaped_in_any_direction
+          @moves.push Move.new( 2,  1), Move.new( 2, -1),
+                      Move.new(-2,  1), Move.new(-2, -1),
+                      Move.new( 1,  2), Move.new( 1, -2),
+                      Move.new(-1,  2), Move.new(-1, -2)
+        end
+      end
+
       # Gets a the color symbol, :black or :white
       attr_reader :color
 
@@ -10,66 +44,57 @@ module Chess
       end
 
       def can_make_move?(move, *args)
-        moves.include?(move)
-      end
-    end
-
-    class Knight < Piece
-      def moves
-        #[1,2,-1,-2].each_permutation_of(2)
-        [ Move.new(-2, 1),  Move.new(-1, 2),
-          Move.new(1, 2),   Move.new(2, 1),
-          Move.new(2, -1),  Move.new(1, -2),
-          Move.new(-1, -2), Move.new(-2, -1) ]
+        self.class.moves.include?(move)
       end
     end
 
     class Bishop < Piece
-      def moves
-        (1..7).inject([]) do |available, n|
-          available << Move.new(n, n)
-          available << Move.new(-1 * n, n)
-          available << Move.new(n, -1 * n)
-          available << Move.new(-1 * n, -1 * n)
-        end
+      define_moves do
+        diagonally_in_any_direction :cells => 1..7
       end
     end
 
     class Rook < Piece
-      def moves
-        (1..7).inject([]) do |available, n|
-          available << Move.new(n, 0)
-          available << Move.new(-1 * n, 0)
-          available << Move.new(0, n)
-          available << Move.new(0, -1 * n)
-        end
+      define_moves do
+        straight_in_any_direction :cells => 1..7
       end
     end
 
-    class Queen  < Piece
-      def moves
-        rook = Rook.new; bishop = Bishop.new
-
-        rook.moves + bishop.moves
+    class Queen < Piece
+      define_moves do
+        straight_in_any_direction   :cells => 1..7
+        diagonally_in_any_direction :cells => 1..7
       end
-
     end
 
-    class King  < Piece
+    # Implementing castling would require significantly more logic and not
+    # required by the problem so it has been left out.
+    class King < Piece
+      define_moves do
+        straight_in_any_direction   :cells => 1
+        diagonally_in_any_direction :cells => 1
+      end
     end
 
-    # Public: Keeper of knowledge for whether a Pawn can perform a certain move
-    # given environmental conditions of the board
+    class Knight < Piece
+      define_moves do
+        l_shaped_in_any_direction
+      end
+    end
+
+    # Public: Knows whether a Pawn can perform a given move.
+    # The Pawn is a special case; its moves vary depending on various factors,
+    # unlike other pieces which, for every case currently covered, always have 
+    # the same moves.
     class Pawn < Piece
-      # Public: Decides whether the pawn can make the given move or not.
+      # Public: Determines whether the Pawn can make the given move.
       #
-      # move                  - A Move instance that is the delta of the
-      #                         original position and the destination.
+      # move                  - A Move instance; the delta of the original
+      #                         position and the destination.
       # current_position      - A Coordinates instance that indicates the pawns
-      #                         current position on the board. Used to determine
-      #                         if the pawn has moved or not.
-      # destination_has_enemy - A truthy or falsey value, whether or not the
-      #                         destination cell has an enemy in it.
+      #                         current position on the board.
+      # destination_has_enemy - A truthy or falsey value indicating whether or
+      #                         not the destination cell has an enemy in it.
       #
       # Returns true if the Pawn can perform the provided move, false if not.
       def can_make_move?(move, current_position, destination_has_enemy = false)

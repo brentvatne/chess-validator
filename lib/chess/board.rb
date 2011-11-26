@@ -1,12 +1,4 @@
 module Chess
-  Coordinates = Struct.new(:column, :row)
-
-  class Move < Coordinates
-    def diagonal?
-      row.abs == column.abs
-    end
-  end
-
   class Board
     # Gets the notation class
     attr_reader :notation
