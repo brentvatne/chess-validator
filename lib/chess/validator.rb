@@ -9,7 +9,7 @@ module Chess
   class << Validator
     include Rules
 
-    def legal?(board, origin, destination, notation = AlgebraicNotation)
+    def legal?(board, origin, destination, notation = Notations::AlgebraicNotation)
       bootstrap!(board, origin, destination, notation) and check_legality
     end
 

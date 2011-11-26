@@ -3,7 +3,7 @@ module Chess
     BoardParser = Object.new
 
     class << BoardParser
-      def parse(board, notation = AlgebraicNotation)
+      def parse(board, notation = Notations::AlgebraicNotation)
         configuration = BoardConfiguration.new
 
         each_cell(board) do |cell, row_number, col_number|
@@ -33,7 +33,7 @@ module Chess
     MoveParser = Object.new
 
     class << MoveParser
-      def parse(moves, notation = AlgebraicNotation)
+      def parse(moves, notation = Notations::AlgebraicNotation)
 
       end
     end

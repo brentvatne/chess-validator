@@ -8,7 +8,7 @@ module Chess
   end
 
   class Board
-    def initialize(initial_state, notation = AlgebraicNotation)
+    def initialize(initial_state, notation = Notations::AlgebraicNotation)
       @notation = notation
       create_new_board
       load_state(initial_state)
@@ -43,7 +43,6 @@ module Chess
 
       @board[row][column]
     end
-
 
     def create_new_board
       @board = Array.new(8).map { |col| col = Array.new(8).fill(:empty) }

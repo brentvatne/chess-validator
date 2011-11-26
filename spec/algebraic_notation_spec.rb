@@ -1,6 +1,6 @@
-describe Chess::AlgebraicNotation do
+describe Chess::Notations::AlgebraicNotation do
 
-  subject { Chess::AlgebraicNotation }
+  subject { Chess::Notations::AlgebraicNotation }
 
   describe "translate_position" do
     it "should translate the column (eg: 'a') correctly" do

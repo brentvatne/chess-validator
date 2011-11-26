@@ -28,10 +28,5 @@ module Chess
         yield(piece)
       end
     end
-
-    # Select the first configuration piece
-    def first
-      @pieces.first
-    end
   end
 end

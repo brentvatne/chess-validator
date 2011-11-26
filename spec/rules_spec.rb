@@ -14,7 +14,7 @@ describe Chess::Rules do
     include Chess::Rules
 
     def initialize
-      @notation = Chess::AlgebraicNotation
+      @notation = Chess::Notations::AlgebraicNotation
     end
   end
 
