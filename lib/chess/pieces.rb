@@ -14,7 +14,9 @@ module Chess
     # given environmental conditions of the board
     class Pawn < Piece
       # Public: Decides whether the pawn can make the given move or not,
-      # given environmental factors.
+      # given environmental factors. The Pawn is the most complicated piece
+      # because it has two special cases: it can move diagonally if it is
+      # attacking, and it can move forward two squares if it has not yet moved.
       #
       # move                  - A Move instance that is the delta of the
       #                         original position and the destination.
@@ -69,7 +71,6 @@ module Chess
 
     class Knight  < Piece
       def can_make_move?(move, *args)
-        p move
         moves.include?(move)
       end
 
@@ -80,12 +81,17 @@ module Chess
           Move.new(-1, -2), Move.new(-2, -1) ]
       end
     end
+
     class Bishop  < Piece
+
     end
+
     class Rook  < Piece
     end
+
     class Queen  < Piece
     end
+
     class King  < Piece
     end
   end

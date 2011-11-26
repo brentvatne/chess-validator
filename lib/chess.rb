@@ -1,5 +1,6 @@
 $LOAD_PATH.unshift(File.dirname(__FILE__))
 
+# Note: Load order matters.
 require 'chess/pieces'
 require 'chess/notations'
 require 'chess/parsers'
