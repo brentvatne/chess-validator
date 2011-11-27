@@ -1,5 +1,44 @@
 module Chess
-  module BoardAccessorMethods
+  class Board
+    # Gets the notation class
+    attr_reader :notation
+
+    def initialize(initial_state, notation = Notations::AlgebraicNotation)
+      @notation = notation
+      create_new_board
+      load_state(initial_state)
+    end
+
+    def create_new_board
+      @board = Array.new(8).map { |col| col = Array.new(8).fill(:empty) }
+    end
+
+    def load_state(board_config)
+      board_config.each { |piece| put_piece piece[:piece], piece[:coordinates] }
+    end
+
+    # place_piece?
+    def put_piece(piece, coords)
+      @board[coords.column][coords.row] = piece
+    end
+
+    # Public: Moves a given piece to another place on the board, ignoring
+    # any validation of rules.
+    #
+    # params - :from - A Coordinates instance
+    #          :to   - A Coordinates instance
+    #
+    # Returns the board instance
+    def move_piece!(params)
+      old_home, new_home = params.values
+      put_piece piece_at(old_home), new_home
+      clear_cell(old_home)
+    end
+
+    def clear_cell(coords)
+      @board[coords.column][coords.row] = :empty
+    end
+
     def rows; @board.transpose; end
     def columns; @board; end
 
@@ -53,48 +92,6 @@ module Chess
           yield Coordinates.new(column_number, row_number)
         end
       end
-    end
-  end
-
-  class Board
-    include BoardAccessorMethods
-    # Gets the notation class
-    attr_reader :notation
-
-    def initialize(initial_state, notation = Notations::AlgebraicNotation)
-      @notation = notation
-      create_new_board
-      load_state(initial_state)
-    end
-
-    def create_new_board
-      @board = Array.new(8).map { |col| col = Array.new(8).fill(:empty) }
-    end
-
-    def load_state(board_config)
-      board_config.each { |piece| put_piece piece[:piece], piece[:coordinates] }
-    end
-
-    # place_piece?
-    def put_piece(piece, coords)
-      @board[coords.column][coords.row] = piece
-    end
-
-    # Public: Moves a given piece to another place on the board, ignoring
-    # any validation of rules.
-    #
-    # params - :from - A Coordinates instance
-    #          :to   - A Coordinates instance
-    #
-    # Returns the board instance
-    def move_piece!(params)
-      old_home, new_home = params.values
-      put_piece piece_at(old_home), new_home
-      clear_cell(old_home)
-    end
-
-    def clear_cell(coords)
-      @board[coords.column][coords.row] = :empty
     end
   end
 end
