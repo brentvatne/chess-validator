@@ -6,6 +6,10 @@ Hi there! Thanks for reading. I recommend checking out the Read the code
 section below for my suggested path through the code, and what to watch
 out for.
 
+## Run the tests
+Uses Rspec, to run the suite: `bundle install && rake`
+*Tested with Ruby 1.9.3p0*
+
 ## Use it
 
 ````ruby
@@ -20,16 +24,18 @@ Chess::Validator.legal?("a3", "a6")
 # Load moves (substitute moves.txt for you file)
 moves = Chess::Parsers::MoveParser.parse(File.open("moves.txt").read)
 
-Chess::Validator.legal?(moves.first[:origin], moves.first[:destination])
+Chess::Validator.legal?(moves.first.origin, moves.first.destination)
 ````
 
 Or you can use `/bin/validate_moves` from the command line:
 
 `ruby bin/validate_moves full_path_to_board_file full_path_to_moves_file`
 
-## Run the tests
-Uses Rspec, to run the suite: `bundle install && rake`
-*Tested with Ruby 1.9.3p0*
+Use the shortcuts to load the example data!
+
+`ruby bin/validate_moves simple`
+
+`ruby bin/validate_moves complex`
 
 ## Read the code
 First, I'd suggest quickly scanning the Board, and Notations files. I
