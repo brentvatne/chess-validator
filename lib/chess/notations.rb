@@ -21,7 +21,7 @@ module Chess
 			# Example
 			#
 			#   AlgebraicNotation.translate_position("a1")
-			#   # => { :column => 0, :row => 7 }
+			#   # => A Coordinate instance with #row => 0 and #column => 0
 			#
 			# The board is laid out as follows:
 			#

@@ -1,0 +1,27 @@
+#!/usr/bin/env ruby
+require File.join(File.expand_path(File.dirname(__FILE__)), '/../lib/chess')
+
+board_path, moves_path = ARGV
+
+if board_path == "complex" || board_path == "simple"
+	complexity = board_path
+	board_path = File.expand_path("./docs/#{complexity}_board.txt")
+	moves_path = File.expand_path("./docs/#{complexity}_moves.txt")
+end
+
+if board_path and moves_path
+	moves        = Chess::Parsers::MoveParser.parse(File.open(moves_path).read)
+	board_config = Chess::Parsers::BoardParser.parse(File.open(board_path).read)
+	board        = Chess::Board.new(board_config)
+
+	moves.each do |move|
+		if Chess::Validator.legal?(board, move[:origin], move[:destination])
+			puts "LEGAL"
+		else
+			puts "ILLEGAL"
+		end
+	end
+else
+	puts "Please provide a full path to both a board and moves data file, or use the sample files: simple or complex"
+	puts "For example: ruby bin/validate_moves simple"
+end

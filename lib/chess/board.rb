@@ -1,8 +1,7 @@
 module Chess
   module BoardAccessorMethods
-    def rows; @board; end
-
-    def columns; @board.transpose; end
+    def rows; @board.transpose; end
+    def columns; @board; end
 
     # piece_at?
     def at(row, column = :blank)
@@ -13,7 +12,7 @@ module Chess
         column = position.column
       end
 
-      @board[row][column]
+      @board[column][row]
     end
 
     def each_cell
@@ -74,7 +73,7 @@ module Chess
 
     # place_piece?
     def add_piece(piece, coords)
-      @board[coords.row][coords.column] = piece
+      @board[coords.column][coords.row] = piece
     end
 
     # Public: Moves a given piece to another place on the board, ignoring
@@ -85,10 +84,13 @@ module Chess
     #
     # Returns the board instance
     def move_piece!(params)
-      from, to = params.values
-      add_piece at(from), to
-      @board[from.row][from.column] = :empty
-      # empty_cell! from
+      old_home, new_home = params.values
+      add_piece at(old_home), new_home
+      clear_cell(old_home)
+    end
+
+    def clear_cell(coords)
+      @board[coords.column][coords.row] = :empty
     end
   end
 end

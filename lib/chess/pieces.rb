@@ -2,6 +2,9 @@ module Chess
   module Pieces
     # Internal: Base class for all chess board pieces.
     class Piece
+			# Okay, maybe I tried to get a bit clever here and might not have
+			# entirely suceeded, but I left it in because it works, is quite
+			# readable, and is pretty DRY.
       class << self
         # Internal: Gets moves for the class. This is not always the source of
         # truth for moves for a piece - refer to the moves instance method
