@@ -8,7 +8,7 @@ module Chess
 				# for a definitive list.
         attr_reader :moves
 
-        # Internal: Populates the moves class variable
+        # Internal: Accepts a block which populates the moves for the class
         def define_moves(&block)
           @moves = []
           class_eval(&block)
