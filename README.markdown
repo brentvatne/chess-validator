@@ -32,7 +32,7 @@ Uses Rspec, to run the suite: `bundle install && rake`
 *Tested with Ruby 1.9.3p0*
 
 ## Read the code
-First, I'd suggest quickly scanning the board, and notations files. I
+First, I'd suggest quickly scanning the Board, and Notations files. I
 would not bother with the parsers. Next, I suggest reading through Pieces,
 to get an understanding of what the Pieces know about themselves. Notice
 that all information about location on the board is within the domain of
@@ -46,7 +46,10 @@ independent of what the other parts have determined.
 
 Extensive documentation has been provided inline, roughly according to
 the TomDoc specification - http://tomdoc.org/
-
+The code may seem verbose because of the comments, or maybe it just is
+verbose to begin with. Either way, I hope that if I am accepted into
+RbMU to be able to improve my ability to write concise code and
+comments.
 
 ## Extend it
 Add your own Notations that implement the same interface as
