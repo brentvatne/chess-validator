@@ -1,41 +1,10 @@
-# RMU Entrance Exam Jan, 2011 - PuzzleNode: Six Degrees of Separation
+# RMU Entrance Exam Jan, 2011 - PuzzleNode: Chess Validator
 ### Brent Vatne
 
 ## Notes for the reviewers
-I could have solved this problem with less code, but in the
-interest of clarity I have tried to abstract away a lot of the details
-into domain objects, such as EdgeSet.
-
-I recently learned about TomDoc and it seems to me to be a clear and
-effective way to document code for the benefit of your future self or
-other programmers. Any feedback on what worked and did not work with my
-commenting would be appreciated! Apologies in advance for being so verbose.
-
-## What it does
-### Problem Description
-http://puzzlenode.com/puzzles/23
-
-SocialGraph analyzes a set of tweets to determine which users are
-connected through their mentions and at what order the connection exists.
-
-A connection is determined using the following rules:
-
-### First order connection
-
--   A is mentioned by B, B is mentioned by A
--   => A is first order with B, B is first order with A
-    *note: if A mentions B and B does not mention A, there is no direct relationship
-
-### nth order connection
-
--   A is n-1th order with B
--   B is first order with C
--   A has no connection higher than n-1th order with C
--   => A has a nth order connection with C
-
-By default, SocialGraph determines up to the 6th order connection, but
-you can pass in the desired depth as an Integer in the last parameter to a new
-SocialGraph instance
+Hi there! Thanks for reading. I recommend checking out the Read the code
+section below for my suggested path through the code, and what to watch
+out for.
 
 ## Use it
 
