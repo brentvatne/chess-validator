@@ -25,8 +25,8 @@ describe Chess::Board do
     let(:destination) { coords("b1") }
 
     before do
-      board.add_piece(Chess::Pieces::Pawn.new(:white), origin)
-      board.add_piece(Chess::Pieces::Rook.new(:white), destination)
+      board.put_piece(Chess::Pieces::Pawn.new(:white), origin)
+      board.put_piece(Chess::Pieces::Rook.new(:white), destination)
     end
 
     it "moves the piece even if the destiantion is occupied" do
@@ -48,8 +48,8 @@ describe Chess::Board do
 		let(:black_king_position) { coords("b5") }
 		let(:white_king_position) { coords("e6") }
 		before do
-			board.add_piece(Chess::Pieces::King.new(:black), black_king_position)
-			board.add_piece(Chess::Pieces::King.new(:white), white_king_position)
+			board.put_piece(Chess::Pieces::King.new(:black), black_king_position)
+			board.put_piece(Chess::Pieces::King.new(:white), white_king_position)
 		end
 
 		it "should find the position of the white king" do
@@ -75,7 +75,7 @@ describe Chess::Board do
     end
   end
 
-  describe "add_piece" do
+  describe "put_piece" do
     it "adds the piece at the given location" do
       new_piece = Chess::Pieces::King.new(:black)
       config << { :piece => new_piece, :coordinates => coords("g1") }

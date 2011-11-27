@@ -112,9 +112,8 @@ module Chess
 
       @origin      = origin_backup
       @destination = destination_backup
-      @piece       = piece_backup
-      board.add_piece(piece_backup, origin)
-      board.add_piece(dest_piece_backup, destination)
+      board.put_piece piece_backup, origin
+      board.put_piece dest_piece_backup, destination
 
       return_value
     end

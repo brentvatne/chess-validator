@@ -68,11 +68,11 @@ module Chess
     end
 
     def load_state(board_config)
-      board_config.each { |piece| add_piece piece[:piece], piece[:coordinates] }
+      board_config.each { |piece| put_piece piece[:piece], piece[:coordinates] }
     end
 
     # place_piece?
-    def add_piece(piece, coords)
+    def put_piece(piece, coords)
       @board[coords.column][coords.row] = piece
     end
 
@@ -85,7 +85,7 @@ module Chess
     # Returns the board instance
     def move_piece!(params)
       old_home, new_home = params.values
-      add_piece at(old_home), new_home
+      put_piece at(old_home), new_home
       clear_cell(old_home)
     end
 
