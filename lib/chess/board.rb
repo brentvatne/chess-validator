@@ -13,7 +13,7 @@ module Chess
         column = position.column
       end
 
-      @board[row][column]
+      board[row][column]
     end
 
     def each_cell
