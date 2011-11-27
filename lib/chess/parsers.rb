@@ -1,5 +1,6 @@
 module Chess
   module Parsers
+
     BoardParser = Object.new
 
     class << BoardParser

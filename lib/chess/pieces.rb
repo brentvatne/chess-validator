@@ -2,13 +2,10 @@ module Chess
   module Pieces
     # Internal: Base class for all chess board pieces.
     class Piece
-			# Okay, maybe I tried to get a bit clever here and might not have
-			# entirely suceeded, but I left it in because it works, is quite
-			# readable, and is pretty DRY.
       class << self
         # Internal: Gets moves for the class. This is not always the source of
-        # truth for moves for a piece - refer to the moves instance method
-        # instead for a definitive list.
+        # truth for moves for a piece - call the moves instance method instead
+				# for a definitive list.
         attr_reader :moves
 
         # Internal: Populates the moves class variable
@@ -17,6 +14,10 @@ module Chess
           class_eval(&block)
         end
 
+				# Internal: Adds horizontal and vertical straight movements to
+				# a classes moves list.
+				#
+				# how_many - Range (1..x) or Integer
         def straight_in_any_direction(how_many)
           Array(how_many[:cells]).each do |n|
            @moves.push Move.new( n,  0), Move.new(-n,  0),
@@ -24,6 +25,9 @@ module Chess
           end
         end
 
+				# Internal: Adds diagonal movements to a classes moves list.
+				#
+				# how_many - Range (1..x) or Integer
         def diagonally_in_any_direction(how_many)
           Array(how_many[:cells]).each do |n|
            @moves.push Move.new( n,  n), Move.new(-n, -n),
@@ -31,6 +35,7 @@ module Chess
           end
         end
 
+				# Internal: Adds L shaped movements to a classes moves list.
         def l_shaped_in_any_direction
           @moves.push Move.new( 2,  1), Move.new( 2, -1),
                       Move.new(-2,  1), Move.new(-2, -1),
@@ -42,10 +47,20 @@ module Chess
       # Gets a the color symbol, :black or :white
       attr_reader :color
 
-      def initialize(color = :white)
+      # Public: Initializes a new instance
+			#
+			# color - Either :black or :white
+      def initialize(color)
         @color = color
       end
 
+      # Public: Determines whether the given move can be made given
+			# movement limitations of the class.
+			#
+			# move - A Move instance
+			# args - Soaks up any special arguments that are not used in the
+			#        general case. (See the Pawn class for an example of when
+			#        they are used).
       def can_make_move?(move, *args)
         self.class.moves.include?(move)
       end
