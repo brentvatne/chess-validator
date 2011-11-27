@@ -1,6 +1,6 @@
 module Chess
 	module Notations
-		# Translates from algebraic notation to data structures that interface 
+		# Public: Translates from algebraic notation to data structures that interface
     # nicely with the board.
 		AlgebraicNotation = Object.new
 

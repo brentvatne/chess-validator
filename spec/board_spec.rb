@@ -1,12 +1,12 @@
 describe Chess::Board do
 
   let(:board)       { Chess::Board.new(config) }
-  let(:empty_board) { Chess::Board.new(Chess::BoardConfiguration.new) }
-  let(:config)      { Chess::BoardConfiguration.new }
+  let(:empty_board) { Chess::Board.new([]) }
+  let(:config)      { [] }
   let(:piece)       { Chess::Pieces::Pawn.new(:white) }
 
   before do
-    config.add_piece(piece, Chess::Coordinates.new(0, 0))
+    config << { :piece => piece, :coordinates => coords("a1") }
   end
 
   describe "initialize" do
@@ -78,8 +78,7 @@ describe Chess::Board do
   describe "add_piece" do
     it "adds the piece at the given location" do
       new_piece = Chess::Pieces::King.new(:black)
-      new_coords = Chess::Coordinates.new(6, 0)
-      config.add_piece(new_piece, new_coords)
+      config << { :piece => new_piece, :coordinates => coords("g1") }
       new_board = Chess::Board.new(config)
       new_board.at("g1").should == new_piece
     end

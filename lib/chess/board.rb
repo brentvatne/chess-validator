@@ -13,7 +13,6 @@ module Chess
 
     def columns; @board.transpose; end
 
-
     def create_new_board
       @board = Array.new(8).map { |col| col = Array.new(8).fill(:empty) }
     end
@@ -22,10 +21,12 @@ module Chess
       board_config.each { |piece| add_piece piece[:piece], piece[:coordinates] }
     end
 
+    # place_piece?
     def add_piece(piece, coords)
       @board[coords.row][coords.column] = piece
     end
 
+    # piece_at?
     def at(row, column=:blank)
       if (in_notation = row).kind_of? String
         coords = translate_to_coordinates(in_notation)
@@ -83,7 +84,6 @@ module Chess
     #
     # Yields an instance of a Chess::Pieces::Piece sublcass
     def positions_of_pieces(color = :all)
-
       columns.each_with_index do |column, column_number|
         column.each_with_index do |cell, row_number|
           if cell != :empty and (cell.color == color or color == :all)
@@ -91,7 +91,7 @@ module Chess
           end
         end
       end
-
     end
+
   end
 end
