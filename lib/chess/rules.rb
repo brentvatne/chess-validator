@@ -10,24 +10,23 @@ module Chess
     end
 
     def valid_move_given_piece
-      board.at(origin).can_make_move?(Move.new(delta_column, delta_row), origin, destination_has_enemy?)
+      piece.can_make_move?(Move.new(delta_column, delta_row), origin, destination_has_enemy?)
     end
 
     def open_path_to_destination
-      path = path_to_destination
-      if path == :none
-        false
-      else
+      if path = path_to_destination
         path.each { |cell| return false if occupied?(cell) }
       end
     end
 
     def path_to_destination
-      direct_path || diagonal_path || horizontal_path || vertical_path || :none
+      direct_path || diagonal_path || horizontal_path || vertical_path
     end
 
     def direct_path
-      [] if (delta_row.abs <= 1 and delta_column.abs <= 1) or piece.kind_of? Chess::Pieces::Knight
+      if (delta_row.abs <= 1 and delta_column.abs <= 1) or piece.kind_of? Chess::Pieces::Knight
+        []
+      end
     end
 
     def horizontal_path
@@ -48,7 +47,7 @@ module Chess
 
     def diagonal_path
       if delta_row.abs == delta_column.abs
-        rows.inject([]) do |paths, n|
+        rows_in_between.inject([]) do |paths, n|
           paths << Coordinates.new(n, n)
         end
       end
@@ -61,10 +60,7 @@ module Chess
 
     def columns_in_between
       first_col, last_col = [origin.column, destination.column].sort
-      p first_col, last_col
-      o = (first_col..last_col).to_a.tap(&:pop).tap(&:shift)
-      p o
-      o
+      (first_col..last_col).to_a.tap(&:pop).tap(&:shift)
     end
 
     # Public: Moves a given piece to another place on the board, ignoring

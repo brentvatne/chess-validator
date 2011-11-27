@@ -22,17 +22,17 @@ describe Chess::Parsers do
       end
     end
 
-    # describe "complex moves" do
-    #   it "should print the results for me" do
-    #     moves = Chess::Parsers::MoveParser.parse(complex_moves)
-    #     moves.each do |move|
-    #       if Chess.legal_move?(board, move[:origin], move[:destination])
-    #         puts "LEGAL"
-    #       else
-    #         puts "ILLEGAL"
-    #       end
-    #     end
-    #   end
-    # end
+    describe "complex moves" do
+      it "should print the results for me" do
+        moves = Chess::Parsers::MoveParser.parse(complex_moves)
+        moves.each do |move|
+          if Chess.legal_move?(board, move[:origin], move[:destination])
+            puts "LEGAL"
+          else
+            puts "ILLEGAL"
+          end
+        end
+      end
+    end
   end
 end
