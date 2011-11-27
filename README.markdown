@@ -49,7 +49,8 @@ the TomDoc specification - http://tomdoc.org/
 The code may seem verbose because of the comments, or maybe it just is
 verbose to begin with. Either way, I hope that if I am accepted into
 RbMU to be able to improve my ability to write concise code and
-comments.
+comments. Lastly, I hope you find my comments useful and thanks for
+reading! Any feedback is much appreciated.
 
 ## Extend it
 Add your own Notations that implement the same interface as
