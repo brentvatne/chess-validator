@@ -4,7 +4,7 @@ module Chess
     def columns; @board; end
 
     # piece_at?
-    def at(row, column = :blank)
+    def piece_at(row, column = :blank)
       if column == :blank
         position = row
         position = notation.translate_position(position) if position.is_a? String
@@ -85,7 +85,7 @@ module Chess
     # Returns the board instance
     def move_piece!(params)
       old_home, new_home = params.values
-      put_piece at(old_home), new_home
+      put_piece piece_at(old_home), new_home
       clear_cell(old_home)
     end
 

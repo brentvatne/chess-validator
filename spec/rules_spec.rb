@@ -15,7 +15,7 @@ describe Chess::Rules do
     def using(origin, destination="h1")
       @origin = coords(origin)
       @destination = coords(destination)
-      @piece = board.at(@origin)
+      @piece = board.piece_at(@origin)
     end
   end
 

@@ -1,11 +1,11 @@
 module Chess
   module Rules
     def piece_exists_at_origin
-      board.at(origin) != :empty
+      board.piece_at(origin) != :empty
     end
 
     def same_team_not_occupying_destination
-      !occupied?(destination) or piece.color != board.at(destination).color
+      !occupied?(destination) or piece.color != board.piece_at(destination).color
     end
 
     def valid_move_given_piece
@@ -75,7 +75,7 @@ module Chess
       enemy_color = if color == :black then :white else :black end
 
       board.positions_of_pieces(enemy_color) do |coords|
-        @origin = coords; @piece = board.at(coords)
+        @origin = coords; @piece = board.piece_at(coords)
         return true if valid_move_given_piece and open_path_to_destination
       end
 
@@ -94,19 +94,19 @@ module Chess
 
     def destination_has_enemy?
       if occupied?(destination)
-        board.at(destination).color != board.at(origin).color
+        board.piece_at(destination).color != board.piece_at(origin).color
       end
     end
 
     def occupied?(coords)
-      board.at(coords) != :empty
+      board.piece_at(coords) != :empty
     end
 
     def restore_state_after
       origin_backup      = origin
       destination_backup = destination
       piece_backup       = piece
-      dest_piece_backup  = board.at(destination)
+      dest_piece_backup  = board.piece_at(destination)
 
       return_value = yield
 

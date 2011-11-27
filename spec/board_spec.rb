@@ -11,7 +11,7 @@ describe Chess::Board do
 
   describe "initialize" do
     it "places pieces from the configuration on the chess board" do
-      board.at(0, 0).should == piece
+      board.piece_at(0, 0).should == piece
     end
 
     it "creates a new 8x8 board" do
@@ -30,17 +30,17 @@ describe Chess::Board do
     end
 
     it "moves the piece even if the destiantion is occupied" do
-      moved_piece = board.at(origin)
-      old_piece   = board.at(destination)
+      moved_piece = board.piece_at(origin)
+      old_piece   = board.piece_at(destination)
       board.move_piece! :from => origin, :to => destination
-      board.at(destination).should == moved_piece
-      board.at(destination).should_not == old_piece
+      board.piece_at(destination).should == moved_piece
+      board.piece_at(destination).should_not == old_piece
     end
 
     it "empties the old spot" do
-      moved_piece = board.at(origin)
+      moved_piece = board.piece_at(origin)
       board.move_piece! :from => origin, :to => destination
-      board.at(origin).should == :empty
+      board.piece_at(origin).should == :empty
     end
   end
 
@@ -63,15 +63,15 @@ describe Chess::Board do
 
   describe "at" do
     it "accepts algebraic notation" do
-      board.at("a1").should == piece
+      board.piece_at("a1").should == piece
     end
 
     it "accepts coordinates" do
-      board.at(0, 0).should == piece
+      board.piece_at(0, 0).should == piece
     end
 
     it "accepts Coordinates instances" do
-      board.at(Chess::Coordinates.new(0,0)).should == piece
+      board.piece_at(Chess::Coordinates.new(0,0)).should == piece
     end
   end
 
@@ -80,7 +80,7 @@ describe Chess::Board do
       new_piece = Chess::Pieces::King.new(:black)
       config << { :piece => new_piece, :coordinates => coords("g1") }
       new_board = Chess::Board.new(config)
-      new_board.at("g1").should == new_piece
+      new_board.piece_at("g1").should == new_piece
     end
   end
 end

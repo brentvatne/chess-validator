@@ -15,7 +15,7 @@ module Chess
       @board       = board.clone
       @origin      = board.notation.translate_position(origin)
       @destination = board.notation.translate_position(destination)
-      @piece       = @board.at(origin)
+      @piece       = @board.piece_at(origin)
 		end
 
     def check_legality
