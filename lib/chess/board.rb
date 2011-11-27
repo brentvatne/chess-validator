@@ -15,6 +15,10 @@ module Chess
       @board[column][row]
     end
 
+    def empty_at?(position)
+      piece_at(position) == :empty
+    end
+
     def each_cell
       columns.each_with_index do |column, column_number|
         column.each_with_index do |cell, row_number|

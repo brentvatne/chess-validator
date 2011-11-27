@@ -1,11 +1,11 @@
 module Chess
   module Rules
     def piece_exists_at_origin
-      board.piece_at(origin) != :empty
+      occupied?(origin)
     end
 
     def same_team_not_occupying_destination
-      !occupied?(destination) or piece.color != board.piece_at(destination).color
+      not occupied?(destination) or piece.color != board.piece_at(destination).color
     end
 
     def valid_move_given_piece
@@ -24,7 +24,7 @@ module Chess
 
     def king_would_remain_safe
       restore_state_after do
-        ! exposes_king_to_check?(piece.color)
+        not exposes_king_to_check?
       end
     end
 
@@ -36,7 +36,7 @@ module Chess
 
     def horizontal_path
       if delta_row == 0
-        columns_in_between.inject([]) do |paths, n|
+        columns_between_origin_destination.inject([]) do |paths, n|
           paths << Coordinates.new(n, origin.row)
         end
       end
@@ -44,7 +44,7 @@ module Chess
 
     def vertical_path
       if delta_column == 0
-        rows_in_between.inject([]) do |paths, n|
+        rows_between_origin_destination.inject([]) do |paths, n|
           paths << Coordinates.new(origin.column, n)
         end
       end
@@ -52,27 +52,17 @@ module Chess
 
     def diagonal_path
       if delta_row.abs == delta_column.abs
-        rows_in_between.inject([]) do |paths, n|
+        rows_between_origin_destination.inject([]) do |paths, n|
           paths << Coordinates.new(n, n)
         end
       end
     end
 
-    def rows_in_between
-      first_row, last_row = [origin.row, destination.row].sort
-      (first_row..last_row).to_a.tap(&:pop).tap(&:shift)
-    end
-
-    def columns_in_between
-      first_col, last_col = [origin.column, destination.column].sort
-      (first_col..last_col).to_a.tap(&:pop).tap(&:shift)
-    end
-
-    def exposes_king_to_check?(color)
+    def exposes_king_to_check?
       board.move_piece! :from => origin, :to => destination
 
-      @destination = board.king_position(color)
-      enemy_color = if color == :black then :white else :black end
+      @destination = board.king_position(piece.color)
+      enemy_color = if piece.color == :black then :white else :black end
 
       board.positions_of_pieces(enemy_color) do |coords|
         @origin = coords; @piece = board.piece_at(coords)
@@ -92,6 +82,16 @@ module Chess
       (destination.column - origin.column)
     end
 
+    def rows_between_origin_destination
+      first_row, last_row = [origin.row, destination.row].sort
+      (first_row..last_row).to_a.tap(&:pop).tap(&:shift)
+    end
+
+    def columns_between_origin_destination
+      first_col, last_col = [origin.column, destination.column].sort
+      (first_col..last_col).to_a.tap(&:pop).tap(&:shift)
+    end
+
     def destination_has_enemy?
       if occupied?(destination)
         board.piece_at(destination).color != board.piece_at(origin).color
@@ -99,7 +99,7 @@ module Chess
     end
 
     def occupied?(coords)
-      board.piece_at(coords) != :empty
+      not board.empty_at?(coords)
     end
 
     def restore_state_after
