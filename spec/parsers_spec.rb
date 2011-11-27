@@ -26,7 +26,7 @@ describe Chess::Parsers do
       it "should print the results for me" do
         moves = Chess::Parsers::MoveParser.parse(complex_moves)
         moves.each do |move|
-          if Chess.legal_move?(board, move[:origin], move[:destination])
+          if Chess::Validator.legal?(board, move[:origin], move[:destination])
             puts "LEGAL"
           else
             puts "ILLEGAL"

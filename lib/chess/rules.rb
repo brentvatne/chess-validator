@@ -5,8 +5,7 @@ module Chess
     end
 
     def same_team_not_occupying_destination
-      return true if not occupied?(destination)
-      piece.color != board.at(destination).color
+      !occupied?(destination) or piece.color != board.at(destination).color
     end
 
     def valid_move_given_piece

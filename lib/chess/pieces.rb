@@ -67,8 +67,6 @@ module Chess
       end
     end
 
-    # Implementing castling would require significantly more logic and not
-    # required by the problem so it has been left out.
     class King < Piece
       define_moves do
         straight_in_any_direction   :cells => 1
@@ -106,16 +104,14 @@ module Chess
       #
       # Returns an Array of Move instances
       def moves(current_position, destination_has_enemy)
-        available = []
-        available << Move.new(0, 1 * direction)
+        available = [Move.new(0, 1 * direction)]
 
         if first_move?(current_position)
           available << Move.new(0, 2 * direction)
         end
 
         if destination_has_enemy
-          available << Move.new(1, 1 * direction)
-          available << Move.new(-1, 1 * direction)
+          available << Move.new(1, 1 * direction) << Move.new(-1, 1 * direction)
         end
 
         available
