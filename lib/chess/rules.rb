@@ -6,16 +6,65 @@ module Chess
 
     def same_team_not_occupying_destination
       return true if not occupied?(destination)
-      board.at(origin).color != board.at(destination).color
+      piece.color != board.at(destination).color
     end
 
     def valid_move_given_piece
-      move = Move.new(destination.column - origin.column, destination.row - origin.row)
-      board.at(origin).can_make_move?(move, origin, destination_has_enemy?)
+      board.at(origin).can_make_move?(Move.new(delta_column, delta_row), origin, destination_has_enemy?)
     end
 
     def open_path_to_destination
-      path_to_destination.each { |cell| return false if occupied?(cell) }
+      path = path_to_destination
+      if path == :none
+        false
+      else
+        path.each { |cell| return false if occupied?(cell) }
+      end
+    end
+
+    def path_to_destination
+      direct_path || diagonal_path || horizontal_path || vertical_path || :none
+    end
+
+    def direct_path
+      [] if (delta_row.abs <= 1 and delta_column.abs <= 1) or piece.kind_of? Chess::Pieces::Knight
+    end
+
+    def horizontal_path
+      if delta_row == 0
+        columns_in_between.inject([]) do |paths, n|
+          paths << Coordinates.new(n, origin.row)
+        end
+      end
+    end
+
+    def vertical_path
+      if delta_column == 0
+        rows_in_between.inject([]) do |paths, n|
+          paths << Coordinates.new(origin.column, n)
+        end
+      end
+    end
+
+    def diagonal_path
+      if delta_row.abs == delta_column.abs
+        rows.inject([]) do |paths, n|
+          paths << Coordinates.new(n, n)
+        end
+      end
+    end
+
+    def rows_in_between
+      first_row, last_row = [origin.row, destination.row].sort
+      (first_row..last_row).to_a.tap(&:pop).tap(&:shift)
+    end
+
+    def columns_in_between
+      first_col, last_col = [origin.column, destination.column].sort
+      p first_col, last_col
+      o = (first_col..last_col).to_a.tap(&:pop).tap(&:shift)
+      p o
+      o
     end
 
     # Public: Moves a given piece to another place on the board, ignoring
@@ -61,8 +110,15 @@ module Chess
       end
     end
 
-    # Helper Methods
     private
+
+    def delta_row
+      (destination.row - origin.row)
+    end
+
+    def delta_column
+      (destination.column - origin.column)
+    end
 
     def destination_has_enemy?
       board.at(destination) != :empty and board.at(destination).color != board.at(origin).color
@@ -70,26 +126,6 @@ module Chess
 
     def occupied?(coords)
       board.at(coords) != :empty
-    end
-
-    def path_to_destination
-      delta_row = destination.row - origin.row
-      delta_col = destination.column - origin.column
-      return [] if (delta_row <= 1 and delta_col <= 1)
-
-      if delta_row.abs == delta_col.abs
-        (origin.row+1..destination.row-1).inject([]) do |paths, n|
-          paths << Coordinates.new(n, n)
-        end
-      elsif delta_col == 0
-        (origin.row+1..destination.row-1).inject([]) do |paths, n|
-          paths << Coordinates.new(origin.row, n)
-        end
-      elsif delta_row == 0
-        (origin.column+1..destination.column-1).inject([]) do |paths, n|
-          paths << Coordinates.new(n, origin.column)
-        end
-      end
     end
 
     def restore_state_after

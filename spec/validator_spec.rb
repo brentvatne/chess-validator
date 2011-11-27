@@ -47,7 +47,7 @@ describe Chess::Validator do
 
     it "should pass the simple data tests" do
       # white pawn 1 up legal
-      Chess.legal_move?(board, "a2", "a3").should be_true
+      # Chess.legal_move?(board, "a2", "a3").should be_true
 
       # white pawn two up (first move) legal
       Chess.legal_move?(board, "a2", "a4").should be_true

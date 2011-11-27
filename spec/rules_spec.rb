@@ -1,12 +1,4 @@
 describe Chess::Rules do
-  let(:start_board) { %Q[ bR bN bB bQ bK bB bN bR
-                          bP bP bP bP bP bP bP bP
-                          -- -- -- -- -- -- -- --
-                          -- -- -- -- -- -- -- --
-                          -- -- -- -- -- -- -- --
-                          -- -- -- -- -- -- -- --
-                          wP wP wP wP wP wP wP wP
-                          wR wN wB wQ wK wB wN wR ] }
   let(:config)   { Chess::Parsers::BoardParser.parse(start_board) }
   let(:board)    { Chess::Board.new(config) }
   let(:notation) { Chess::Notations::AlgebraicNotation }
@@ -29,17 +21,40 @@ describe Chess::Rules do
 
   subject { RuleTestClass.new(board) }
 
-  %Q[ bK -- -- -- -- bB -- --
-      -- -- -- -- -- bP -- --
-      -- bP wR -- wB -- bN --
-      wN -- bP bR -- -- -- wP
-      -- -- -- -- wK wQ -- wP
-      wR -- bB wN wP -- -- --
-      -- wP bQ -- -- wP -- --
-      -- -- -- -- -- wB -- -- ]
+  describe "previously incorrect tests" do
+    let(:config)   { Chess::Parsers::BoardParser.parse(complex_board) }
+    subject { RuleTestClass.new(board) }
+
+    it "should not fail on this example (rook 2 left over top of its own)" do
+      subject.using("d5", "b5")
+      # col diff = 2
+      # row diff = 0
+      subject.open_path_to_destination.should be_false
+    end
+
+    it "should not fail on this example (queen all the way across the board)" do
+      subject.using("c2", "e7")
+      subject.open_path_to_destination.should be_false
+      # problem is it is not fitting in the categories?
+    end
+
+    it "should not fail on this example (queen moving up over two if its own pieces)" do
+      subject.using("c2", "c6")
+      subject.open_path_to_destination.should be_false
+    end
+
+    it "should not fail on this example (queen moving up over one of its team maters)" do
+      subject.using("c2", "c4")
+      subject.open_path_to_destination.should be_false
+    end
+  end
 
   describe "king_would_remain_safe" do
     it "should be false if the king is exposed to danger" do
+    end
+    it "should not fail on this example (king to vulnerable position)" do
+      # subject.using("e4", "e5")
+      # subject.open_path_to_destination.should be_false
     end
 
     it "should be true if the king would remain safe" do
@@ -51,32 +66,6 @@ describe Chess::Rules do
       it "does not care if a piece exists in the destination cell" do
         subject.using("a1", "a2")
         subject.open_path_to_destination.should be_true
-      end
-
-      it "should not fail on this example (rook 2 left over top of its own)" do
-        subject.using("d5", "b5")
-        subject.open_path_to_destination.should be_false
-      end
-
-      it "should not fail on this example (queen all the way across the board)" do
-        subject.using("c2", "e7")
-        subject.open_path_to_destination.should be_false
-        # problem is it is not fitting in the categories?
-      end
-
-      it "should not fail on this example (queen moving up over two if its own pieces)" do
-        subject.using("c2", "c6")
-        subject.open_path_to_destination.should be_false
-      end
-
-      it "should not fail on this example (queen moving up over one of its team maters)" do
-        subject.using("c2", "c4")
-        subject.open_path_to_destination.should be_false
-      end
-
-      it "should not fail on this example (king to vulnerable position)" do
-        subject.using("e4", "e5")
-        subject.open_path_to_destination.should be_false
       end
 
       it "does not care about the direction" do
@@ -95,6 +84,8 @@ describe Chess::Rules do
       it "should return false if there is a piece in between the origin and the destination" do
         subject.using("a1", "a3")
         subject.open_path_to_destination.should be_false
+        subject.using("c1", "c6")
+        subject.open_path_to_destination.should be_false
       end
     end
     describe "right next door" do
@@ -112,6 +103,7 @@ describe Chess::Rules do
         subject.open_path_to_destination.should be_true
       end
     end
+
   end
 
   describe "piece_exists_at_origin" do
