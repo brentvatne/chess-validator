@@ -4,9 +4,9 @@ module Chess
     def columns; @board; end
 
     # piece_at?
-    def piece_at(row, column = :blank)
-      if column == :blank
-        position = row
+    def piece_at(column, row = :blank)
+      if row == :blank
+        position = column
         position = notation.translate_position(position) if position.is_a? String
         row    = position.row
         column = position.column
