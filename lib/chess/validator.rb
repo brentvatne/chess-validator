@@ -12,7 +12,7 @@ module Chess
     attr_reader :piece
 
 		def initialize(board, origin, destination)
-      @board       = board
+      @board       = board.clone
       @origin      = board.notation.translate_position(origin)
       @destination = board.notation.translate_position(destination)
       @piece       = @board.at(origin)
@@ -25,6 +25,5 @@ module Chess
       open_path_to_destination            and
       king_would_remain_safe
     end
-
   end
 end

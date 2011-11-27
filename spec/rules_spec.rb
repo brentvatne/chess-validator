@@ -47,17 +47,22 @@ describe Chess::Rules do
       subject.using("c2", "c4")
       subject.open_path_to_destination.should be_false
     end
-  end
 
-  describe "king_would_remain_safe" do
-    it "should be false if the king is exposed to danger" do
-    end
-    it "should not fail on this example (king to vulnerable position)" do
-      # subject.using("e4", "e5")
-      # subject.open_path_to_destination.should be_false
-    end
+    describe "king_would_remain_safe" do
+      it "should be false if the king is exposed to danger" do
+        subject.using("a8", "g5")
+        subject.king_would_remain_safe.should be_false
+      end
 
-    it "should be true if the king would remain safe" do
+      it "should not fail on this example (king to vulnerable position)" do
+        subject.using("e4", "e5")
+        subject.king_would_remain_safe.should be_false
+      end
+
+      it "should be true if the king would remain safe" do
+        subject.using("a8", "a7")
+        subject.king_would_remain_safe.should be_true
+      end
     end
   end
 

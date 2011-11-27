@@ -132,6 +132,5 @@ module Chess
         if color == :black then position.row == 6 else position.row == 1 end
       end
     end
-
   end
 end
