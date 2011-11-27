@@ -9,9 +9,6 @@ describe Chess::Notations::AlgebraicNotation do
     it "should translate the row (eg: '1') correctly" do
       subject.translate_position("b8").row.should == 7
     end
-    it "should be able to translate back to algebreaic notation" do
-      pending 'in order to print the board out again'
-    end
   end
 
   describe "translate_piece" do
@@ -62,10 +59,6 @@ describe Chess::Notations::AlgebraicNotation do
 
     it "should translate kings" do
       subject.translate_piece("wK").should be_a Chess::Pieces::King
-    end
-
-    it "should be able to translate back to algebreaic notation" do
-      pending 'in order to print the board out again'
     end
   end
 end

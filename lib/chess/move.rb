@@ -1,5 +1,4 @@
 module Chess
   Coordinates = Struct.new(:column, :row)
-
-  class Move < Coordinates; end
+  Move        = Struct.new(:column, :row)
 end

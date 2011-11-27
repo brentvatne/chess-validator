@@ -9,30 +9,4 @@ describe Chess::Parsers do
       end
     end
   end
-
-  describe Chess::Parsers::MoveParser do
-    let(:simple_moves) { File.open("spec/data/simple_moves.txt").read }
-    let(:complex_moves) { File.open("spec/data/complex_moves.txt").read }
-		let(:config) { Chess::Parsers::BoardParser.parse(complex_board) }
-    let(:board)  { Chess::Board.new(config) }
-
-    describe "parse" do
-      it "should return an array of hash's" do
-        moves = Chess::Parsers::MoveParser.parse(simple_moves)
-      end
-    end
-
-    describe "complex moves" do
-      it "should print the results for me" do
-        moves = Chess::Parsers::MoveParser.parse(complex_moves)
-        moves.each do |move|
-          if Chess::Validator.legal?(board, move[:origin], move[:destination])
-            puts "LEGAL"
-          else
-            puts "ILLEGAL"
-          end
-        end
-      end
-    end
-  end
 end
