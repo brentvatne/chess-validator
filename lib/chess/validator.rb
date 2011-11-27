@@ -16,9 +16,16 @@ module Chess
       self.new(board, origin, destination).check_legality
     end
 
+    # Internal: Returns the Board instance being used by the Validator
     attr_reader :board
+
+    # Internal: Returns the origin, a Coordinates instance
     attr_reader :origin
+
+    # Internal: Returns the destination, a Coordinates instance
     attr_reader :destination
+
+    # Internal: Returns the piece, a Pieces::Piece subclass such as Pawn
     attr_reader :piece
 
     # Internal: Initializes a Validator instance

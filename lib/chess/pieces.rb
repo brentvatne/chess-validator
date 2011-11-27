@@ -3,6 +3,7 @@ module Chess
     # Internal: Base class for all chess board pieces.
     class Piece
       class << self
+
         # Internal: Gets moves for the class. This is not always the source of
         # truth for moves for a piece - call the moves instance method instead
 				# for a definitive list.
@@ -47,14 +48,14 @@ module Chess
       # Gets a the color symbol, :black or :white
       attr_reader :color
 
-      # Public: Initializes a new instance
+      # Internal: Initializes a new instance
 			#
 			# color - Either :black or :white
       def initialize(color)
         @color = color
       end
 
-      # Public: Determines whether the given move can be made given
+      # Internal: Determines whether the given move can be made given
 			# movement limitations of the class.
 			#
 			# move - A Move instance
@@ -98,11 +99,12 @@ module Chess
       end
     end
 
-    # Public: Knows whether a Pawn can perform a given move.
+    # Internal: Knows whether a Pawn can perform a given move.
     # The Pawn is a special case; its moves vary depending on various factors,
     # unlike other pieces which, for every case currently covered, always have 
     # the same moves.
     class Pawn < Piece
+
       # Public: Determines whether the Pawn can make the given move.
       #
       # move                  - A Move instance; the delta of the original
