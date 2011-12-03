@@ -19,7 +19,7 @@ require 'chess'
 board_config = Chess::Parsers::BoardParser.parse(File.open("board.txt").read)
 board        = Chess::Board.new(board_config)
 
-Chess::Validator.legal?("a3", "a6")
+Chess::Validator.legal?(board, "a3", "a6")
 
 # Load moves (substitute moves.txt for you file)
 moves = Chess::Parsers::MoveParser.parse(File.open("moves.txt").read)
